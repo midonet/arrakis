@@ -1,4 +1,4 @@
-Arakkis
+Arrakis
 =======
 
-Project Arakkis
+Project Arrakis
