@@ -1,7 +1,7 @@
-class midonet_types::types {
+class midokura_puppet_types::types {
 
   define t (
-    $source = "midonet_repository/${title}.erb",
+    $source = "${module_name}/${title}.erb",
     $mode = '0644',
     $owner = 'root',
     $group = 'root',

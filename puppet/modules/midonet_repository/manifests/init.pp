@@ -18,25 +18,29 @@
 class midonet_repository (
   $username,
   $password,
-  $midokura_repository_midonet_version = $midonet_repository::params::midokura_repository_midonet_version,
-  $midokura_repository_rhel_version = $midonet_repository::params::midokura_repository_rhel_version,
-  $midokura_repository_openstack_version = $midonet_repository::params::midokura_repository_openstack_version
+  $midonet_version = $midonet_repository::params::midonet_version,
+  $rhel_version = $midonet_repository::params::rhel_version,
+  $openstack_version = $midonet_repository::params::openstack_version
   ) inherits midonet_repository::params {
-  $midokura_repository_username = $username
-  $midokura_repository_password = $password
 
   if $::osfamily == 'RedHat' {
-    midonet_types::types::t { '/etc/yum.repos.d/midokura.repo': }
-  } elsif $::osfamily == 'Debian' {
+    midokura_puppet_types::types::t { '/etc/yum.repos.d/midokura.repo': }
+  } elsif $::osfamily == 'Debian' and $::osrelease == '' {
     package{ "curl":
        ensure => "installed"
     }
     ->
     exec {"${module_name}__install_package_key_on_osfamily_Debian":
-      command => "/usr/bin/curl -k http://$midokura_repository_username:$midokura_repository_password@apt.midokura.com/packages.midokura.key | /usr/bin/apt-key add -",
+      command => "/usr/bin/curl -k http://$username:$password@apt.midokura.com/packages.midokura.key | /usr/bin/apt-key add -",
       unless => "/usr/bin/apt-key list | /bin/grep Midokura"
     }
-    midonet_types::types::t { '/etc/apt/sources.list.d/midonet.list': }
+
+    exec {"${module_name}__add_cloud_archive_on_osfamily_Debian":
+      command => "add-apt-repository cloud-archive:$openstack_version",
+      unless => ""
+    }
+
+    midokura_puppet_types::types::t { '/etc/apt/sources.list.d/midonet.list': }
   } else {
     notice ("Your operating system class ${::operatingsystem} will not have the Midokura repository applied.")
   }
