@@ -1,0 +1,69 @@
+[1mdiff --git a/Makefile b/Makefile[m
+[1mindex b4696bd..0a6c0d1 100644[m
+[1m--- a/Makefile[m
+[1m+++ b/Makefile[m
+[36m@@ -6,12 +6,13 @@[m [mTESTCONN = $(TESTUSER)@$(TESTHOST)[m
+ TESTHOSTNAME = test3[m
+ [m
+ all:[m
+[32m+[m	[32m$(SSH) $(TESTCONN) -t -- sudo cat /etc/apt/sources.list.d/midonet.list[m
+ [m
+ test:[m
+ 	$(SSH) $(TESTCONN) -t mkdir -pv /tmp/alex[m
+ 	rsync --delete -avpPxe "$(SSH)" . $(TESTCONN):/tmp/alex/.[m
+ 	echo 'node $(TESTHOSTNAME) { class {"midonet_repository": username => "$(OS_MIDOKURA_REPOSITORY_USER)", password => "${OS_MIDOKURA_REPOSITORY_PASS}" } }' | $(SSH) $(TESTCONN) -t tee /tmp/alex/node.pp[m
+[31m-	$(SSH) $(TESTCONN) -t sudo puppet apply --noop --verbose --modulepath=/tmp/alex/puppet/modules /tmp/alex/node.pp[m
+[32m+[m	[32m$(SSH) $(TESTCONN) -t sudo puppet apply --show_diff --noop --verbose --modulepath=/tmp/alex/puppet/modules /tmp/alex/node.pp[m
+ [m
+ doit:[m
+ 	$(SSH) $(TESTCONN) -t mkdir -pv /tmp/alex[m
+[1mdiff --git a/puppet/modules/midonet_repository/manifests/init.pp b/puppet/modules/midonet_repository/manifests/init.pp[m
+[1mindex 929a073..adad47b 100644[m
+[1m--- a/puppet/modules/midonet_repository/manifests/init.pp[m
+[1m+++ b/puppet/modules/midonet_repository/manifests/init.pp[m
+[36m@@ -26,11 +26,24 @@[m [mclass midonet_repository ([m
+   $midokura_repository_password = $password[m
+ [m
+   if $::osfamily == 'RedHat' {[m
+[31m-    midonet_repository::types::t { '/etc/yum.repos.d/midokura.repo': }[m
+[32m+[m[32m    t { '/etc/yum.repos.d/midokura.repo': }[m
+   } elsif $::osfamily == 'Debian' {[m
+[31m-    midonet_repository::types::t { '/etc/apt/sources.list.d/midonet.list': }[m
+[32m+[m[32m    # TODO apt-key add the key unless its already there[m
+[32m+[m[32m    t { '/etc/apt/sources.list.d/midonet.list': }[m
+   } else {[m
+     notice ("Your operating system class ${::operatingsystem} will not have the Midokura repository applied.")[m
+   }[m
+[32m+[m
+[32m+[m[32m  define t ($source = "midonet_repository/${title}.erb", $mode = '0644', $owner = 'root', $group = 'root') {[m
+[32m+[m[32m    file {"t_TEMPLATE_${source}_TO_${title}":[m
+[32m+[m[32m      ensure => "file",[m
+[32m+[m[32m      path => "${title}",[m
+[32m+[m[32m      content => template("${source}"),[m
+[32m+[m[32m      mode => "${mode}",[m
+[32m+[m[32m      owner => "${owner}",[m
+[32m+[m[32m      group => "${group}",[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m
+ }[m
+ [m
+[1mdiff --git a/puppet/modules/midonet_repository/templates/etc/apt/sources.list.d/midonet.list.erb b/puppet/modules/midonet_repository/templates/etc/apt/sources.list.d/midonet.list.erb[m
+[1mindex 7136ef2..243f8a0 100644[m
+[1m--- a/puppet/modules/midonet_repository/templates/etc/apt/sources.list.d/midonet.list.erb[m
+[1m+++ b/puppet/modules/midonet_repository/templates/etc/apt/sources.list.d/midonet.list.erb[m
+[36m@@ -1,10 +1,12 @@[m
+ #[m
+ # midolman[m
+ #[m
+[31m-deb [arch-amd64] http://<%- $midokura_repository_username %>:<%- $midokura_repository_password %>@apt.midokura.com/midonet/v<%- $midokura_repository_midonet_version %>/stable precise main non-free[m
+[32m+[m[32mdeb [arch-amd64] http://<%= $midokura_repository_username %>:<%= $midokura_repository_password %>@apt.midokura.com/midonet/v<%= $midokura_repository_midonet_version %>/stable precise main non-free[m
+[32m+[m
+[32m+[m[32m<%= scope.lookupvar('midonet_repository::midokura_repository_username') %>[m
+ [m
+ #[m
+ # neutron plugin[m
+ #[m
+[31m-deb [arch-amd64] http://<%- $midokura_repository_username %>:<%- $midokura_repository_password %>@apt.midokura.com/openstack/<%- $midokura_repository_openstack_version %>/stable precise main[m
+[32m+[m[32mdeb [arch-amd64] http://<%= $midokura_repository_username %>:<%= $midokura_repository_password %>@apt.midokura.com/openstack/<%= $midokura_repository_openstack_version %>/stable precise main[m
+ [m

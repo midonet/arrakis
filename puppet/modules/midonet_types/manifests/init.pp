@@ -1,0 +1,2 @@
+class midonet_types {
+}

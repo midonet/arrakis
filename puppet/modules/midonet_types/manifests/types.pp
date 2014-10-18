@@ -1,4 +1,4 @@
-class midonet_repository::types {
+class midonet_types::types {
 
   define t (
     $source = "midonet_repository/${title}.erb",

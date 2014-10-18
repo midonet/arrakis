@@ -1,10 +1,10 @@
 #
 # midolman
 #
-deb [arch-amd64] http://<%- $midokura_repository_username %>:<%- $midokura_repository_password %>@apt.midokura.com/midonet/v<%- $midokura_repository_midonet_version %>/stable precise main non-free
+deb [arch-amd64] http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>@apt.midokura.com/midonet/v<%= scope['midonet_repository::midokura_repository_midonet_version'] %>/stable precise main non-free
 
 #
 # neutron plugin
 #
-deb [arch-amd64] http://<%- $midokura_repository_username %>:<%- $midokura_repository_password %>@apt.midokura.com/openstack/<%- $midokura_repository_openstack_version %>/stable precise main
+deb [arch-amd64] http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>@apt.midokura.com/openstack/<%= scope['midonet_repository::midokura_repository_openstack_version'] %>/stable precise main
 

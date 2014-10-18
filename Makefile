@@ -6,12 +6,13 @@ TESTCONN = $(TESTUSER)@$(TESTHOST)
 TESTHOSTNAME = test3
 
 all:
+	$(SSH) $(TESTCONN) -t -- sudo cat /etc/apt/sources.list.d/midonet.list
 
 test:
 	$(SSH) $(TESTCONN) -t mkdir -pv /tmp/alex
 	rsync --delete -avpPxe "$(SSH)" . $(TESTCONN):/tmp/alex/.
 	echo 'node $(TESTHOSTNAME) { class {"midonet_repository": username => "$(OS_MIDOKURA_REPOSITORY_USER)", password => "${OS_MIDOKURA_REPOSITORY_PASS}" } }' | $(SSH) $(TESTCONN) -t tee /tmp/alex/node.pp
-	$(SSH) $(TESTCONN) -t sudo puppet apply --noop --verbose --modulepath=/tmp/alex/puppet/modules /tmp/alex/node.pp
+	$(SSH) $(TESTCONN) -t sudo puppet apply --show_diff --noop --verbose --modulepath=/tmp/alex/puppet/modules /tmp/alex/node.pp
 
 doit:
 	$(SSH) $(TESTCONN) -t mkdir -pv /tmp/alex

@@ -26,12 +26,23 @@ class midonet_repository (
   $midokura_repository_password = $password
 
   if $::osfamily == 'RedHat' {
-    midonet_types::types::t { '/etc/yum.repos.d/midokura.repo': }
+    t { '/etc/yum.repos.d/midokura.repo': }
   } elsif $::osfamily == 'Debian' {
     # TODO apt-key add the key unless its already there
-    midonet_types::types::t { '/etc/apt/sources.list.d/midonet.list': }
+    t { '/etc/apt/sources.list.d/midonet.list': }
   } else {
     notice ("Your operating system class ${::operatingsystem} will not have the Midokura repository applied.")
+  }
+
+  define t ($source = "midonet_repository/${title}.erb", $mode = '0644', $owner = 'root', $group = 'root') {
+    file {"t_TEMPLATE_${source}_TO_${title}":
+      ensure => "file",
+      path => "${title}",
+      content => template("${source}"),
+      mode => "${mode}",
+      owner => "${owner}",
+      group => "${group}",
+    }
   }
 
 }
