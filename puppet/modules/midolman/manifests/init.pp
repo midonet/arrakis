@@ -12,6 +12,13 @@ class midolman (
                 '/etc/midolman/midolman-env.sh'
                ]
 
+    if $::lsbdistid == 'Ubuntu' and $::lsbdistcodename == 'precise' {
+      exec {"${module_name}__add_cloud_archive_on_osfamily_Debian":
+        command => "/bin/echo | /usr/bin/add-apt-repository cloud-archive:$openstack_version",
+        unless => "/usr/bin/test -f /etc/apt/sources.list.d/cloudarchive-icehouse.list"
+      }
+    }
+    ->
     package{ "midolman":
        ensure => "installed"
     }

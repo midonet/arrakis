@@ -34,12 +34,7 @@ class midonet_repository (
       command => "/usr/bin/curl -k http://$username:$password@apt.midokura.com/packages.midokura.key | /usr/bin/apt-key add -",
       unless => "/usr/bin/apt-key list | /bin/grep Midokura"
     }
-
-    exec {"${module_name}__add_cloud_archive_on_osfamily_Debian":
-      command => "add-apt-repository cloud-archive:$openstack_version",
-      unless => ""
-    }
-
+    ->
     midokura_puppet_types::types::t { '/etc/apt/sources.list.d/midonet.list': }
   } else {
     notice ("Your operating system class ${::operatingsystem} will not have the Midokura repository applied.")
