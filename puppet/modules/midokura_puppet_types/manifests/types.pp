@@ -1,7 +1,7 @@
 class midokura_puppet_types::types {
 
   define t (
-    $source = "${module_name}/${title}.erb",
+    $source = "${caller_module_name}/${title}.erb",
     $mode = '0644',
     $owner = 'root',
     $group = 'root',
