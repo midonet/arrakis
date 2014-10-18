@@ -12,6 +12,12 @@ class midolman (
                 '/etc/midolman/midolman-env.sh'
                ]
 
+    if $::osfamily == 'RedHat' {
+      $bgpd_binary = '/usr/sbin/'
+    } else {
+      $bgpd_binary = '/usr/lib/quagga/'
+    }
+
     if $::lsbdistid == 'Ubuntu' and $::lsbdistcodename == 'precise' {
       exec {"${module_name}__add_cloud_archive_on_Ubuntu_precise":
         command => "/bin/echo | /usr/bin/add-apt-repository cloud-archive:$openstack_version",
@@ -19,16 +25,16 @@ class midolman (
       }
     }
 
-    package{ "midolman":
-       ensure => "installed"
-    }
-    ->
+#package{ "midolman":
+#       ensure => "installed"
+#    }
+#    ->
     midokura_puppet_types::types::t { $configs: }
-    ->
-    service {"midolman":
-      ensure => "running",
-      subscribe => File[$configs]
-    }
+#    ->
+#    service {"midolman":
+#      ensure => "running",
+#      subscribe => File[$configs]
+#    }
 
 }
 
