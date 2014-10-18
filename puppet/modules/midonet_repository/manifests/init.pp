@@ -28,7 +28,14 @@ class midonet_repository (
   if $::osfamily == 'RedHat' {
     midonet_types::types::t { '/etc/yum.repos.d/midokura.repo': }
   } elsif $::osfamily == 'Debian' {
-    # TODO apt-key add the key unless its already there
+    package{ "curl":
+       ensure => "installed"
+    }
+    ->
+    exec {"${module_name}__install_package_key_on_osfamily_Debian":
+      command => "/usr/bin/curl -k http://$midokura_repository_username:$midokura_repository_password@apt.midokura.com/packages.midokura.key | /usr/bin/apt-key add -",
+      unless => "/usr/bin/apt-key list | /bin/grep Midokura"
+    }
     midonet_types::types::t { '/etc/apt/sources.list.d/midonet.list': }
   } else {
     notice ("Your operating system class ${::operatingsystem} will not have the Midokura repository applied.")
