@@ -13,12 +13,12 @@ class midolman (
                ]
 
     if $::lsbdistid == 'Ubuntu' and $::lsbdistcodename == 'precise' {
-      exec {"${module_name}__add_cloud_archive_on_osfamily_Debian":
+      exec {"${module_name}__add_cloud_archive_on_Ubuntu_precise":
         command => "/bin/echo | /usr/bin/add-apt-repository cloud-archive:$openstack_version",
         unless => "/usr/bin/test -f /etc/apt/sources.list.d/cloudarchive-icehouse.list"
       }
     }
-    ->
+
     package{ "midolman":
        ensure => "installed"
     }
@@ -26,7 +26,7 @@ class midolman (
     midokura_puppet_types::types::t { $configs: }
     ->
     service {"midolman":
-      ensure => "started",
+      ensure => "running",
       subscribe => $configs
     }
 
