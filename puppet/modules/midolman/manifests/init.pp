@@ -27,7 +27,7 @@ class midolman (
     ->
     service {"midolman":
       ensure => "running",
-      subscribe => $configs
+      subscribe => File[$configs]
     }
 
 }
