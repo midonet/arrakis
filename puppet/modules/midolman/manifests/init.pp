@@ -1,5 +1,11 @@
 #
-class midolman () inherits midolman::params {
+class midolman (
+  $zookeepers = $midolman::params::zookeepers,
+  $cassandras = $midolman::params::cassandras,
+  $cluster_name = $midolman::params::cluster_name,
+  $max_heap_size = $midolman::params::max_heap_size,
+  $heap_newsize = $midolman::params::heap_newsize
+) inherits midolman::params {
 
     $configs = [
                 '/etc/midolman/midolman.conf',
