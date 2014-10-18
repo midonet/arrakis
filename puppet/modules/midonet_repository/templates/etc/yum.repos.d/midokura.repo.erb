@@ -1,14 +1,14 @@
 [Midokura]
 name=Midokura Repository
-baseurl=http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>/repo/v<%= scope['midonet_repository::midokura_repository_midonet_version'] %>/stable/RHEL/<%= scope['midonet_repository::midokura_repository_rhel_version'] %>/
-gpgkey=http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>/repo/RPM-GPG-KEY-midokura
+baseurl=http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>@yum.midokura.com/repo/v<%= scope['midonet_repository::midokura_repository_midonet_version'] %>/stable/RHEL/<%= scope['midonet_repository::midokura_repository_rhel_version'] %>/
+gpgkey=http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>@yum.midokura.com/repo/RPM-GPG-KEY-midokura
 enabled=1
 gpgcheck=1
 
 [Midokura Neutron Plugin]
 name=Midokura Neutron Plugin Repository
-baseurl=http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>/repo/openstack-<%= scope['midonet_repository::midokura_repository_openstack_version'] %>/stable/RHEL/<%= scope['midonet_repository::midokura_repository_rhel_version'] %>/
-gpgkey=http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>/repo/RPM-GPG-KEY-midokur
+baseurl=http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>@yum.midokura.com/repo/openstack-<%= scope['midonet_repository::midokura_repository_openstack_version'] %>/stable/RHEL/<%= scope['midonet_repository::midokura_repository_rhel_version'] %>/
+gpgkey=http://<%= scope['midonet_repository::midokura_repository_username'] %>:<%= scope['midonet_repository::midokura_repository_password'] %>@yum.midokura.com/repo/RPM-GPG-KEY-midokur
 a
 enabled=1
 gpgcheck=1
