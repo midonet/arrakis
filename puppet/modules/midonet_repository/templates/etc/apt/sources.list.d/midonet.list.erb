@@ -1,0 +1,10 @@
+#
+# midolman
+#
+deb [arch=amd64] http://<%= scope['midonet_repository::username'] %>:<%= scope['midonet_repository::password'] %>@apt.midokura.com/midonet/v<%= scope['midonet_repository::midonet_version'] %>/stable precise main non-free
+
+#
+# neutron plugin
+#
+deb [arch=amd64] http://<%= scope['midonet_repository::username'] %>:<%= scope['midonet_repository::password'] %>@apt.midokura.com/openstack/<%= scope['midonet_repository::openstack_version'] %>/stable precise main
+

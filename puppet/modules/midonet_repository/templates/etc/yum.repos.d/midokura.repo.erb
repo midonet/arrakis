@@ -1,0 +1,14 @@
+[Midokura]
+name=Midokura Repository
+baseurl=http://<%= scope['midonet_repository::username'] %>:<%= scope['midonet_repository::password'] %>@yum.midokura.com/repo/v<%= scope['midonet_repository::midonet_version'] %>/stable/RHEL/<%= scope['midonet_repository::rhel_version'] %>/
+gpgkey=http://<%= scope['midonet_repository::username'] %>:<%= scope['midonet_repository::password'] %>@yum.midokura.com/repo/RPM-GPG-KEY-midokura
+enabled=1
+gpgcheck=1
+
+[Midokura Neutron Plugin]
+name=Midokura Neutron Plugin Repository
+baseurl=http://<%= scope['midonet_repository::username'] %>:<%= scope['midonet_repository::password'] %>@yum.midokura.com/repo/openstack-<%= scope['midonet_repository::openstack_version'] %>/stable/RHEL/<%= scope['midonet_repository::rhel_version'] %>/
+gpgkey=http://<%= scope['midonet_repository::username'] %>:<%= scope['midonet_repository::password'] %>@yum.midokura.com/repo/RPM-GPG-KEY-midokura
+enabled=1
+gpgcheck=1
+
