@@ -17,6 +17,7 @@ What you can see here is that the template is used from the same location in the
             group => "root",
           }
 ```
+Note that the file in puppet contains the suffix .erb.
 
 This is the corresponding example for a puppet file resource:
 ```
