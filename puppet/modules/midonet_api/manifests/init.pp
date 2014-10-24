@@ -33,7 +33,7 @@ class midonet_api (
   file {"/etc/tomcat6/Catalina/localhost/midonet-api.xml":
     ensure => "file",
     path => "/etc/tomcat6/Catalina/localhost/midonet-api.xml",
-    source => "midonet_api/etc/tomcat6/Catalina/localhost/midonet-api.xml",
+    source => "puppet:///modules/midonet_api/etc/tomcat6/Catalina/localhost/midonet-api.xml",
     mode => "0644",
     owner => "root",
     group => "root",
@@ -42,7 +42,7 @@ class midonet_api (
   file {"/etc/default/tomcat6":
     ensure => "file",
     path => "/etc/default/tomcat6",
-    source => "midonet_api/etc/default/tomcat6",
+    source => "puppet:///modules/midonet_api/etc/default/tomcat6",
     mode => "0644",
     owner => "root",
     group => "root",
