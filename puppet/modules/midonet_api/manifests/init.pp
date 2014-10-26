@@ -8,8 +8,13 @@ class midonet_api (
   $midobrain_vxgw_enabled = $midonet_api::params::midobrain_vxgw_enabled
   ) inherits midonet_api::params {
 
-  # TODO Fallunterscheidung Centos und RHEL
-  package {"openjdk-7-jre-headless":
+  if $::osfamily == "RedHat" {
+    $jre_package = "java-1.7.0-openjdk"
+  } else {
+    $jre_package = "openjdk-7-jre-headless"
+  }
+
+  package {"$jre_package":
     ensure => "installed"
   }
   ->

@@ -3,6 +3,13 @@ class midonet_manager (
   $rest_api_base_url = $midonet_manager::params::rest_api_base_url,
   $root_url = $midonet_manager::params::root_url
   ) inherits midonet_manager::params {
+
+  if $::osfamily == "RedHat" {
+    $webserver = "httpd"
+  } else {
+    $webserver = "apache2"
+  }
+
   $package_name = "midonet-cp2" # change this later to midonet-manager
 
   package {"$package_name":
@@ -23,7 +30,7 @@ class midonet_manager (
     group => "root",
   }
   ->
-  service {"apache2": # change this for RHEL and centos to httpd or sth
+  service {"$webserver":
     ensure => "running",
     subscribe => File["/var/www/html/midonet-cp2/config/client.js"]
   }
