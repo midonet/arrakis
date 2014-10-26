@@ -35,7 +35,7 @@ class hadoop-zookeeper {
     }
 
     file { "/var/lib/zookeeper/myid":
-      content => inline_template("<%= myid %>"),
+      content => inline_template("<%= @myid %>"),
       require => Package["zookeeper"],
     }
 
