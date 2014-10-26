@@ -14,68 +14,30 @@
 # limitations under the License.
 
 class hadoop-zookeeper {
-  define client {
-    package { "zookeeper":
-      ensure => latest,
-      require => Package["jdk"],
-    } 
-  }
-
-  define server($myid, $ensemble = ["localhost:2888:3888"],
-                $kerberos_realm = "") 
+  define server($myid, $ensemble = ["localhost:2888:3888"])
   {
-    package { "zookeeper-server":
-      ensure => latest,
-      require => Package["jdk"],
+    package { "zookeeper":
+      ensure => latest
     }
 
-    service { "zookeeper-server":
+    service { "zookeeper":
       ensure => running,
-      require => [ Package["zookeeper-server"], 
-                   Exec["zookeeper-server-initialize"] ],
-      subscribe => [ File["/etc/zookeeper/conf/zoo.cfg"],
+      require => Package["zookeeper"],
+      subscribe => [ File["/etc/zookeeper/zoo.cfg"],
                      File["/var/lib/zookeeper/myid"] ],
       hasrestart => true,
       hasstatus => true,
-    } 
+    }
 
-    file { "/etc/zookeeper/conf/zoo.cfg":
-      content => template("hadoop-zookeeper/zoo.cfg"),
-      require => Package["zookeeper-server"],
+    file { "/etc/zookeeper/zoo.cfg":
+      content => template("hadoop-zookeeper/etc/zookeeper/zoo.cfg.erb"),
+      require => Package["zookeeper"],
     }
 
     file { "/var/lib/zookeeper/myid":
       content => inline_template("<%= myid %>"),
-      require => Package["zookeeper-server"],
-    }
-    
-    exec { "zookeeper-server-initialize":
-      command => "/usr/bin/zookeeper-server-initialize",
-      user    => "zookeeper",
-      creates => "/var/lib/zookeeper/version-2",
-      require => Package["zookeeper-server"],
+      require => Package["zookeeper"],
     }
 
-    if ($kerberos_realm) {
-      require kerberos::client
-
-      kerberos::host_keytab { "zookeeper":
-        spnego => true,
-        notify => Service["zookeeper-server"],
-        require => Package["zookeeper-server"],
-      }
-
-      file { "/etc/zookeeper/conf/java.env":
-        source  => "puppet:///modules/hadoop-zookeeper/java.env",
-        require => Package["zookeeper-server"],
-        notify  => Service["zookeeper-server"],
-      }
-
-      file { "/etc/zookeeper/conf/jaas.conf":
-        content => template("hadoop-zookeeper/jaas.conf"),
-        require => Package["zookeeper-server"],
-        notify  => Service["zookeeper-server"],
-      }
-    }
   }
 }
