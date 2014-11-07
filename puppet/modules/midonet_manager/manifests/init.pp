@@ -1,5 +1,6 @@
 #
 class midonet_manager (
+  $rest_api_base = $midonet_manager::params::rest_api_base,
   $rest_api_base_url = $midonet_manager::params::rest_api_base_url,
   $root_url = $midonet_manager::params::root_url
   ) inherits midonet_manager::params {
