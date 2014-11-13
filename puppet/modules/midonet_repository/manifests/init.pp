@@ -24,8 +24,15 @@ class midonet_repository (
   ) inherits midonet_repository::params {
 
   if $::osfamily == 'RedHat' {
-    midokura_puppet_types::types::t { '/etc/yum.repos.d/midokura.repo': }
-  } elsif $::osfamily == 'Debian' and $::osrelease == '' {
+    file {"/etc/yum.repos.d/midokura.repo":
+      ensure => "file",
+      path => "/etc/yum.repos.d/midokura.repo",
+      content => template("midonet_repository/etc/yum.repos.d/midokura.repo.erb"),
+      mode => "0644",
+      owner => "root",
+      group => "root",
+    }
+  } elsif $::lsbdistid == 'Ubuntu' {
     package{ "curl":
        ensure => "installed"
     }
@@ -35,9 +42,16 @@ class midonet_repository (
       unless => "/usr/bin/apt-key list | /bin/grep Midokura"
     }
     ->
-    midokura_puppet_types::types::t { '/etc/apt/sources.list.d/midonet.list': }
+    file {"/etc/apt/sources.list.d/midonet.list":
+      ensure => "file",
+      path => "/etc/apt/sources.list.d/midonet.list",
+      content => template("midonet_repository/etc/apt/sources.list.d/midonet.list.erb"),
+      mode => "0644",
+      owner => "root",
+      group => "root",
+    }
   } else {
-    notice ("Your operating system class ${::operatingsystem} will not have the Midokura repository applied.")
+    notice ("This puppet module does not support your operating system family and/or distribution.")
   }
 
 }
