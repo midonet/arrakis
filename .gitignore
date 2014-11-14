@@ -35,3 +35,6 @@ build/
 
 # DS_Store
 */.DS_Store
+
+# Configuration files for cloud9.io
+*/.c9/
