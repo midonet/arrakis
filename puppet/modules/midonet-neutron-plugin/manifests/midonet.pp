@@ -32,7 +32,7 @@ class neutron::plugins::midonet (
     file_line { '/etc/neutron/neutron.conf:sql_connection':
       path    => '/etc/neutron/neutron.conf',
       match   => '^sql_connection=(.*)$',
-      line    => "sql_connection=${::neutron::server::connection}",
+      line    => "sql_connection=${::neutron::server::database_connection}",
       require => [ Package['neutron-server'], Package[$plugin_package] ],
       notify  => Service['neutron-server'],
       }
@@ -65,4 +65,12 @@ class neutron::plugins::midonet (
       source => template('/etc/neutron/midokura_config_lines.erb'),
       order => '2'
       }
+      
+    file { '/etc/neutron/plugins/midonet':
+      ensure => directory,
+      owner => 'root',
+      group => 'neutron',
+      mode => '0640'
+      }
+      
   }
