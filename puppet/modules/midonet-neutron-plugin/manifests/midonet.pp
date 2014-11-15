@@ -46,31 +46,31 @@ class neutron::plugins::midonet (
       notify  => Service['neutron-server'],
       }
     }
-    
+
     concat { '/etc/neutron/neutron.conf':
-      ensure => present,
+      ensure  => present,
       replace => true,
-      path => '/etc/neutron/neutron.conf'
-      backup => '/etc/neutron/neutron.conf.backup'
+      path    => '/etc/neutron/neutron.conf'
+      backup  => '/etc/neutron/neutron.conf.backup'
       }
-    
+
     concat::fragment { 'original_neutron_conf':
       target => '/etc/neutron/neutron.conf',
       source => '/etc/neutron/neutron.conf',
-      order => '1'
+      order  => '1'
       }
-      
+
     concat::fragment { 'midokura_config_lines':
       target => '/etc/neutron/neutron.conf',
       source => template('/etc/neutron/midokura_config_lines.erb'),
-      order => '2'
+      order  => '2'
       }
-      
+
     file { '/etc/neutron/plugins/midonet':
       ensure => directory,
-      owner => 'root',
-      group => 'neutron',
-      mode => '0640'
+      owner  => 'root',
+      group  => 'neutron',
+      mode   => '0640'
       }
       
   }
