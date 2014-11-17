@@ -72,5 +72,15 @@ class neutron::plugins::midonet (
       group  => 'neutron',
       mode   => '0640'
       }
-      
+
+    file { '/etc/neutron/plugins/midonet/midonet.ini':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'neutron',
+      mode    => '0640',
+      content => template(/etc/neutron/plugins/midonet/midonet.ini.erb),
+      notify  => Service[("midolman"), ("neutron")]
+      }
+    }
+
   }
