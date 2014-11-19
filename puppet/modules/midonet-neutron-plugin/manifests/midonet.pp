@@ -19,13 +19,25 @@ class neutron::plugins::midonet (
       ensure => present,
     }
 
-    if $::operatingsystem == 'Ubuntu' {
+    if $::osfamily == 'ubuntu' {
     file_line { '/etc/default/neutron-server:NEUTRON_PLUGIN_CONFIG':
       path    => '/etc/default/neutron-server',
       match   => '^NEUTRON_PLUGIN_CONFIG=(.*)$',
       line    => "NEUTRON_PLUGIN_CONFIG=${plugin_path}",
       require => [ Package['neutron-server'], Package[$plugin_package] ],
-      notify  => Service['neutron-server'],
+      notify  => Service['neutron-server']
+      }
+    }
+
+    if $::osfamily == "redhat" {
+      file { '/etc/neutron/plugin.ini':
+        ensure => link,
+        owner => 'root',
+        group => 'neutron',
+        mode => '0640',
+        target => $plugin_path,
+        require => [ Package['neutron-server'], Package[$plugin_package] ],
+        notify  => Service['neutron-server']
       }
     }
 
