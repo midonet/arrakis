@@ -2,10 +2,10 @@
 class midonet_api {
 
   define tomcat6($keystone_admin_token,
-    $rest_api_base_url = "http://localhost:8080/midonet-api"
-    $keystone_service_host = "127.0.0.1"
-    $keystone_tenant_name = "admin"
-    $zookeeper_hosts = "127.0.0.1"
+    $rest_api_base_url = "http://localhost:8080/midonet-api",
+    $keystone_service_host = "127.0.0.1",
+    $keystone_tenant_name = "admin",
+    $zookeeper_hosts = "127.0.0.1",
     $midobrain_vxgw_enabled = "true") {
 
     if $::osfamily == "RedHat" {
