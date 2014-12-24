@@ -3,8 +3,8 @@ class midonet_repository {
 
   define redhat_MEM($username,
     $password,
-    $midonet_version = '1.7'
-    $rhel_version = '7'
+    $midonet_version = '1.7',
+    $rhel_version = '7',
     $midonet_openstack_plugin_version = 'icehouse') {
 
     file {"/etc/yum.repos.d/midokura.repo":
@@ -19,7 +19,7 @@ class midonet_repository {
 
   define ubuntu_MEM($username,
     $password,
-    $midonet_version = '1.7'
+    $midonet_version = '1.7',
     $midonet_openstack_plugin_version = 'icehouse') {
 
     package{ "curl":
