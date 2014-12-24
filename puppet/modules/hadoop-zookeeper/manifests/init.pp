@@ -16,28 +16,38 @@
 class hadoop-zookeeper {
   define server($myid, $ensemble = ["localhost:2888:3888"])
   {
-    package { "zookeeper":
+    if $::osfamily == "RedHat" {
+      $zkconfdir = "/etc/zookeeper"
+      $zkmyiddir = "/var/lib/zookeeper"
+      $packages = ["zookeeper"]
+    } else {
+      $zkconfdir = "/etc/zookeeper/conf"
+      $zkmyiddir = $zkconfdir
+      $packages = ["zookeeper", "zookeeperd"]
+    }
+
+    package { $packages:
       ensure => latest
     }
-
-    service { "zookeeper":
-      ensure => running,
-      require => Package["zookeeper"],
-      subscribe => [ File["/etc/zookeeper/zoo.cfg"],
-                     File["/var/lib/zookeeper/myid"] ],
-      hasrestart => true,
-      hasstatus => true,
-    }
-
-    file { "/etc/zookeeper/zoo.cfg":
+    ->
+    file { "$zkconfdir/zoo.cfg":
       content => template("hadoop-zookeeper/etc/zookeeper/zoo.cfg.erb"),
       require => Package["zookeeper"],
     }
-
-    file { "/var/lib/zookeeper/myid":
+    ->
+    file { "$zkmyiddir/myid":
       content => inline_template("<%= @myid %>"),
       require => Package["zookeeper"],
     }
-
+    ->
+    service { "zookeeper":
+      ensure => running,
+      require => Package["zookeeper"],
+      subscribe => [ File["$zkconfdir/zoo.cfg"],
+                     File["$zkmyiddir/myid"] ],
+      hasrestart => true,
+      hasstatus => true,
+    }
   }
 }
+
