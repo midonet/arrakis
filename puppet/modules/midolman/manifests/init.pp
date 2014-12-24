@@ -9,8 +9,10 @@ class midolman {
 
         if $::osfamily == 'RedHat' {
           $bgpd_binary = '/usr/sbin/'
+          $packages = ["midolman"]
         } else {
           $bgpd_binary = '/usr/lib/quagga/'
+          $packages = ["openjdk-7-jre-headless", "midolman"]
         }
 
         if $::lsbdistid == 'Ubuntu' and $::lsbdistcodename == 'precise' {
@@ -20,7 +22,7 @@ class midolman {
           }
         }
 
-        package{ "midolman":
+        package{ $packages:
             ensure => "latest"
         }
         ->
