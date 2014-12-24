@@ -1,11 +1,11 @@
 #
 class midonet_repository {
 
-  define redhat($username,
+  define redhat_MEM($username,
     $password,
     $midonet_version = '1.7'
     $rhel_version = '7'
-    $openstack_version = 'icehouse') {
+    $midonet_openstack_plugin_version = 'icehouse') {
 
     file {"/etc/yum.repos.d/midokura.repo":
       ensure => "file",
@@ -17,10 +17,10 @@ class midonet_repository {
     }
   }
 
-  define ubuntu($username,
+  define ubuntu_MEM($username,
     $password,
     $midonet_version = '1.7'
-    $openstack_version = 'icehouse') {
+    $midonet_openstack_plugin_version = 'icehouse') {
 
     package{ "curl":
        ensure => "installed"
