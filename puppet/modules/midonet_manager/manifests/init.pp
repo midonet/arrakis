@@ -19,8 +19,9 @@ class midonet_manager {
       ensure => "latest"
     }
     ->
-    exec { "/bin/mv /var/www/midonet-cp2 $install_dir":
-      onlyif => "/bin/test -d /var/www/midonet-cp2 && /bin/test ! -d $install_dir"
+    exec { "mv /var/www/midonet-cp2 $install_dir":
+      path => "/bin:/usr/bin",
+      onlyif => "test -d /var/www/midonet-cp2 && test ! -d $install_dir"
     }
     ->
     file {"$install_dir/config/client.js":
