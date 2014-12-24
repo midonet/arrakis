@@ -16,7 +16,7 @@ class midonet_manager {
     $package_name = "midonet-cp2" # change this later to midonet-manager
 
     package {"$package_name":
-      ensure => "installed"
+      ensure => "latest"
     }
     ->
     file {"$install_dir/config/client.js":

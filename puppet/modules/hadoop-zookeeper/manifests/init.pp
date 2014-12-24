@@ -27,7 +27,7 @@ class hadoop-zookeeper {
     }
 
     package { $packages:
-      ensure => latest
+      ensure => "latest"
     }
     ->
     file { "$zkconfdir/zoo.cfg":

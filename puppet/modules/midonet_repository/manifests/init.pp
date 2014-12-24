@@ -23,7 +23,7 @@ class midonet_repository {
     $midonet_openstack_plugin_version = 'icehouse') {
 
     package{ "curl":
-       ensure => "installed"
+       ensure => "latest"
     }
     ->
     exec {"${module_name}__install_package_key_on_osfamily_Debian":

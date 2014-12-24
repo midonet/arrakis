@@ -15,15 +15,15 @@ class midonet_api {
     }
 
     package {"$jre_package":
-      ensure => "installed"
+      ensure => "latest"
     }
     ->
     package {"tomcat6":
-      ensure => "installed"
+      ensure => "latest"
     }
     ->
     package {"midonet-api":
-      ensure => "installed"
+      ensure => "latest"
     }
     ->
     file {"/usr/share/midonet-api/WEB-INF/web.xml":

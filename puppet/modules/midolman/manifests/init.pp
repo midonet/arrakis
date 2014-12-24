@@ -21,7 +21,7 @@ class midolman {
         }
 
         package{ "midolman":
-            ensure => "installed"
+            ensure => "latest"
         }
         ->
         file {"/etc/midolman/midolman.conf":
