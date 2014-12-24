@@ -1,29 +1,12 @@
-# Class midonet_repository
 #
-# most of this code is ripped off from stahnma-epel-1.0.0
-#
-# Actions:
-#   Configure the proper repositories and import GPG keys for using midonet
-#
-# Requires:
-#   RHEL, CentOS or Ubuntu
-#
-# Sample Usage inside a node definition:
-#
-# class {"midonet_repository":
-#   username => "alexander",
-#   password => "alexander",
-# }
-#
-class midonet_repository (
-  $username,
-  $password,
-  $midonet_version = $midonet_repository::params::midonet_version,
-  $rhel_version = $midonet_repository::params::rhel_version,
-  $openstack_version = $midonet_repository::params::openstack_version
-  ) inherits midonet_repository::params {
+class midonet_repository {
 
-  if $::osfamily == 'RedHat' {
+  define redhat($username,
+    $password,
+    $midonet_version = '1.7'
+    $rhel_version = '7'
+    $openstack_version = 'icehouse') {
+
     file {"/etc/yum.repos.d/midokura.repo":
       ensure => "file",
       path => "/etc/yum.repos.d/midokura.repo",
@@ -32,7 +15,13 @@ class midonet_repository (
       owner => "root",
       group => "root",
     }
-  } elsif $::lsbdistid == 'Ubuntu' {
+  }
+
+  define ubuntu($username,
+    $password,
+    $midonet_version = '1.7'
+    $openstack_version = 'icehouse') {
+
     package{ "curl":
        ensure => "installed"
     }
@@ -50,8 +39,6 @@ class midonet_repository (
       owner => "root",
       group => "root",
     }
-  } else {
-    notice ("This puppet module does not support your operating system family and/or distribution.")
   }
 
 }
