@@ -53,6 +53,10 @@ class midonet_api {
       group => "root",
     }
     ->
+    exec {"/bin/mkdir -pv /var/lib/tomcat7/webapps": }
+    ->
+    exec {"/bin/chown -Rv tomcat6:tomcat6 /var/lib/tomcat7": }
+    ->
     service {"tomcat6":
       ensure => "running",
       subscribe => File["/usr/share/midonet-api/WEB-INF/web.xml",
