@@ -13,8 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-hadoop-zookeeper::client { "zoo visitor": } 
-hadoop-zookeeper::server { "test-oozie-server": 
-  myid => "0",
+hadoop-zookeeper::server { "test-oozie-server":
+  myid => "1",
   ensemble => ["foo:2888:3888", "bar:2888:3888", "baz:2888:3888"],
 }
