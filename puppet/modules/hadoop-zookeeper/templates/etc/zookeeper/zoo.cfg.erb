@@ -32,6 +32,6 @@ dataDir=/var/lib/zookeeper
 # the port at which the clients will connect
 clientPort=2181
 <% @ensemble.each_with_index do |server,idx| %>
-server.<%= idx %>=<%= server %>
+server.<%= idx + 1 %>=<%= server %>
 <% end %>
 
