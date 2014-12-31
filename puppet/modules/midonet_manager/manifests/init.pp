@@ -2,7 +2,6 @@
 class midonet_manager {
 
   define apache2 ($rest_api_base = "http://localhost:8080",
-    $rest_api_base_url = "$rest_api_base/midonet-api/",
     $install_dir = "/var/www/html/midonet-cp2") {
 
     if $::osfamily == "RedHat" {
