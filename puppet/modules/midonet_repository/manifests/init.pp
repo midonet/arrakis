@@ -28,7 +28,7 @@ class midonet_repository {
     ->
     exec {"${module_name}__install_package_key_on_osfamily_Debian":
       command => "/usr/bin/curl -k http://$username:$password@apt.midokura.com/packages.midokura.key | /usr/bin/apt-key add -",
-      unless => "/usr/bin/apt-key list | /bin/grep Midokura"
+      unless => "/usr/bin/apt-key list | /bin/grep 'info@midokura.jp'"
     }
     ->
     file {"/etc/apt/sources.list.d/midokura.list":
@@ -50,7 +50,7 @@ class midonet_repository {
     ->
     exec {"${module_name}__install_package_key_on_osfamily_Debian":
       command => "/usr/bin/curl -k http://repo.midonet.org/packages.midokura.key | /usr/bin/apt-key add -",
-      unless => "/usr/bin/apt-key list | /bin/grep Midokura"
+      unless => "/usr/bin/apt-key list | /bin/grep 'ops@midokura.com'"
     }
     ->
     file {"/etc/apt/sources.list.d/midonet.list":
