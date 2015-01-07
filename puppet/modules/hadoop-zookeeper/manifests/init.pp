@@ -14,22 +14,29 @@
 # limitations under the License.
 
 class hadoop-zookeeper {
-  define server($myid, $ensemble = ["localhost:2888:3888"])
+  define install()
   {
     if $::osfamily == "RedHat" {
-      $zkconfdir = "/etc/zookeeper"
-      $zkmyiddir = "/var/lib/zookeeper"
       $packages = ["zookeeper"]
     } else {
-      $zkconfdir = "/etc/zookeeper/conf"
-      $zkmyiddir = $zkconfdir
       $packages = ["zookeeper", "zookeeperd"]
     }
 
     package { $packages:
       ensure => "latest"
     }
-    ->
+  }
+
+  define configure($myid, $ensemble = ["localhost:2888:3888"])
+  {
+    if $::osfamily == "RedHat" {
+      $zkconfdir = "/etc/zookeeper"
+      $zkmyiddir = "/var/lib/zookeeper"
+    } else {
+      $zkconfdir = "/etc/zookeeper/conf"
+      $zkmyiddir = $zkconfdir
+    }
+
     file { "$zkconfdir/zoo.cfg":
       content => template("hadoop-zookeeper/etc/zookeeper/zoo.cfg.erb"),
       require => Package["zookeeper"],
@@ -39,7 +46,18 @@ class hadoop-zookeeper {
       content => inline_template("<%= @myid %>"),
       require => Package["zookeeper"],
     }
-    ->
+  }
+
+  define start()
+  {
+    if $::osfamily == "RedHat" {
+      $zkconfdir = "/etc/zookeeper"
+      $zkmyiddir = "/var/lib/zookeeper"
+    } else {
+      $zkconfdir = "/etc/zookeeper/conf"
+      $zkmyiddir = $zkconfdir
+    }
+
     service { "zookeeper":
       ensure => running,
       require => Package["zookeeper"],
@@ -49,5 +67,6 @@ class hadoop-zookeeper {
       hasstatus => true,
     }
   }
+
 }
 
