@@ -44,8 +44,8 @@ class midonet_api {
     $keystone_service_host = "127.0.0.1",
     $keystone_tenant_name = "admin",
     $zookeeper_hosts = "127.0.0.1",
-    $midobrain_vxgw_enabled = "true") {
-
+    $midobrain_vxgw_enabled = "true")
+  {
     file {"/usr/share/midonet-api/WEB-INF/web.xml":
       ensure => "file",
       path => "/usr/share/midonet-api/WEB-INF/web.xml",
@@ -71,6 +71,7 @@ class midonet_api {
       mode => "0644",
       owner => "root",
       group => "root",
+    }
   }
 
   define start()
