@@ -1,0 +1,22 @@
+---
+driver:
+  name: docker
+
+provisioner:
+  name: puppet_apply
+  manifests_path: tests
+  modules_path: modules
+  manifest: init.pp
+
+platforms:
+  - name: ubuntu-14.04
+    driver_config:
+        image: ubuntu:14.04
+  - name: centos-7
+    driver_config:
+        image: centos:centos7
+
+suites:
+  - name: default
+    run_list:
+    attributes:
