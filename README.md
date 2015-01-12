@@ -31,11 +31,3 @@ This is the corresponding example for a puppet file resource:
           }
 ```
 
-The modules are used by the following projects:
-- https://github.com/midonet/orizuru/
-- https://github.com/midonet/midonet-dockerfile
-
-If you plan on changes for the calling convention of the modules you have to:
-- branch this project
-- fix the calling of the puppet modules in these projects
-
