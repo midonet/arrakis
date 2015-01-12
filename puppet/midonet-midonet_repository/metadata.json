@@ -1,0 +1,27 @@
+{
+  "name": "midonet-midonet_repository",
+  "version": "2014.11.0",
+  "author": "midonet",
+  "summary": "Configure the MidoNet repositories",
+  "license": "Apache 2.0",
+  "source": "https://github.com/midonet/Arrakis",
+  "project_page": "http://midonet.org",
+  "issues_url": "https://midonet.atlassian.net",
+  "dependencies": [
+    {
+    "name":"puppetlabs-stdlib","version_requirement":">= 1.0.0",
+    "name":"puppetlabs-apt","version_requirement":">=1.7.0"
+    }
+  ],
+  "tags": ["openstack", "sdn", "midonet"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem": "RedHat",
+    "operatingsystemrelease": [ "6.5", "6.6", "7.0" ]
+    },
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": ["12.04", "14.04"]
+    }
+  ]
+}
