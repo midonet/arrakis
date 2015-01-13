@@ -9,22 +9,33 @@
 # [*midonet_repo*]
 #   Midonet Repository URL location. Please note the version
 #   of midonet use to be part of that URL
+# [*midonet_openstack_repo*]
+#   Midonet Repository URL for the Midonet Neutron Plugin. The version use to
+#   be part of the URL. The package avaiable in this repo (the midonet plugin)
+#   is released along each OpenStack release (Icehouse, Juno, Kilo...) , not
+#   the Midonet OSS release. This is why Midonet maintains different repos.
+# [*midonet_thirdparty_repo*]
+#   Third party software pinned for Midonet stability URL. 
 # [*midonet_release*]
 #   Stage of the package. It can be 'stable', 'testing' or 'unstable'
-# [*midonet_openstack_repo*]
-#   Midonet Repository URL for the Midonet Neutron Plugin. The version use
-#   to be part of the URL.
-# [*midonet_thirdparty_repo*]
-#   Third party software pinned for Midonet stability URL
 # [*midonet_key*]
-#   Midonet GPG key for validate packages
+#   Midonet GPG key for validate packages. Only override it if you use a different
+#   fork of Midonet.
 # [*midoney_key_url*]
-#   Midonet Key URL path
+#   Midonet Key URL path.
 #
 # === Examples
 #
+#  include midonet_repository
+#
 #  class { 'midonet_repository':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#    midonet_repo            => 'another repo here',
+#    midonet_openstack_repo  => 'another repo here',
+#    midonet_thirdparty_repo => 'another repo here',
+#    midonet_release         => 'unstable',
+#    midonet_key             => 'GPG key',
+#    midonet_key_url         => 'midonet key repo source' 
+#    
 #  }
 #
 # === Authors
@@ -50,9 +61,9 @@
 
 class midonet_repository (
     $midonet_repo = 'http://repo.midonet.org/midonet/v2014.11',
-    $midonet_release = 'stable',
     $midonet_openstack_repo = 'http://repo.midonet.org/openstack-juno',
     $midonet_thirdparty_repo = 'http://repo.midonet.org/misc',
+    $midonet_release = 'stable',
     $midonet_key = '50F18FCF',
     $midonet_key_url = 'http://repo.midonet.org/packages.midokura.key')
     {
