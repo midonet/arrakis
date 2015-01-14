@@ -1,0 +1,8 @@
+---
+midonet_repository::midonet_repo: 'http://repo.midonet.org/midonet/v2014.11'
+midonet_repository::midonet_openstack_repo: 'http://repo.midonet.org/openstack-icehouse'
+midonet_repository::midonet_thirdparty_repo: 'http://repo.midonet.org/misc'
+midonet_repository::midonet_key: '50F18FCF'
+midonet_repository::midonet_stage: 'stable'
+midonet_repository::midonet_key_url: 'http://repo.midonet.org/packages.midokura.key'
+midonet_repository::openstack_release: 'icehouse'

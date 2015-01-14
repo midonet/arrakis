@@ -1,42 +1,64 @@
 # == Class: midonet_repository
 #
-# Prepare the midonet repositories to install packages
+# Prepare the midonet repositories to install packages.
 #
 # === Parameters
 #
-# Document parameters here.
-#
 # [*midonet_repo*]
 #   Midonet Repository URL location. Please note the version
-#   of midonet use to be part of that URL
+#   of midonet use to be part of that URL.
+#   Ex: 'http://repo.midonet.org/midonet/v2014.11'
 # [*midonet_openstack_repo*]
 #   Midonet Repository URL for the Midonet Neutron Plugin. The version use to
 #   be part of the URL. The package avaiable in this repo (the midonet plugin)
 #   is released along each OpenStack release (Icehouse, Juno, Kilo...) , not
 #   the Midonet OSS release. This is why Midonet maintains different repos.
+#   Ex: 'http://repo.midonet.org/openstack'.
 # [*midonet_thirdparty_repo*]
-#   Third party software pinned for Midonet stability URL. 
+#   Third party software pinned for Midonet stability URL.
+#   Ex: 'http://repo.midonet.org/misc'.
 # [*midonet_release*]
-#   Stage of the package. It can be 'stable', 'testing' or 'unstable'
-# [*midonet_key*]
-#   Midonet GPG key for validate packages. Only override it if you use a different
-#   fork of Midonet.
+#   Stage of the package. It can be 'stable', 'testing' or 'unstable'.
+#   Stable by default.
 # [*midoney_key_url*]
 #   Midonet Key URL path.
+# [*midonet_key*]
+#   Midonet GPG key for validate packages. Only override it if you use a
+#   different fork of Midonet.
 #
 # === Examples
 #
-#  include midonet_repository
+# The easiest way to run the class is:
 #
-#  class { 'midonet_repository':
-#    midonet_repo            => 'another repo here',
-#    midonet_openstack_repo  => 'another repo here',
-#    midonet_thirdparty_repo => 'another repo here',
-#    midonet_release         => 'unstable',
-#    midonet_key             => 'GPG key',
-#    midonet_key_url         => 'midonet key repo source' 
-#    
-#  }
+#      include midonet_repository
+#
+# And puppet will configure the system to use the latest stable version
+# of MidoNet OSS.
+#
+# To install other releases than the last default's Midonet OSS, you can
+# override the default's midonet_repository atributes by a resource-like
+# declaration:
+#
+#     class { 'midonet_repository':
+#         midonet_repo            => 'http://repo.midonet.org/midonet/v2014.11',
+#         midonet_openstack_repo  => 'http://repo.midonet.org/openstack',
+#         midonet_thirdparty_repo => 'http://repo.midonet.org/misc',
+#         midonet_key             => '50F18FCF',
+#         midonet_stage           => 'stable',
+#         midonet_key_url         => 'http://repo.midonet.org/packages.midokura.key',
+#         openstack_release       => 'juno'
+#     }
+#
+# or use a YAML file using the same attributes, accessible from Hiera:
+#
+#     midonet_repository::midonet_repo: 'http://repo.midonet.org/midonet/v2014.11'
+#     midonet_repository::midonet_openstack_repo: 'http://repo.midonet.org/openstack'
+#     midonet_repository::midonet_thirdparty_repo: 'http://repo.midonet.org/misc'
+#     midonet_repository::midonet_key: '50F18FCF'
+#     midonet_repository::midonet_stage: 'stable'
+#     midonet_repository::midonet_key_url: 'http://repo.midonet.org/packages.midokura.key'
+#     midonet_repository::openstack_release: 'juno'
+#
 #
 # === Authors
 #
@@ -58,49 +80,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 class midonet_repository (
-    $midonet_repo = 'http://repo.midonet.org/midonet/v2014.11',
-    $midonet_openstack_repo = 'http://repo.midonet.org/openstack-juno',
-    $midonet_thirdparty_repo = 'http://repo.midonet.org/misc',
-    $midonet_release = 'stable',
-    $midonet_key = '50F18FCF',
-    $midonet_key_url = 'http://repo.midonet.org/packages.midokura.key')
-    {
+    $midonet_repo,
+    $midonet_openstack_repo,
+    $midonet_thirdparty_repo,
+    $midonet_stage,
+    $openstack_release,
+    $midonet_key_url,
+    $midonet_key=unset) {
 
-        if $::osfamily == 'Debian'
-        {
-            notice('Adding midonet sources for Debian-like distribution')
-
-            class { 'apt':
-                fancy_progress => true
-            }
-
-            apt::source { 'midonet':
-                comment     => 'Midonet apt repository',
-                location    => $midonet_repo,
-                release     => $midonet_release,
-                include_src => false
-            }
-
-            apt::source { 'midonet_plugin':
-                comment     => 'Midonet apt plugin repository',
-                location    => $midonet_openstack_repo,
-                release     => $midonet_release,
-                include_src => false
-            }
-
-            apt::source { 'midonet_third_party':
-                comment     => 'Midonet apt plugin repository',
-                location    => $midonet_thirdparty_repo,
-                release     => 'stable',
-                include_src => false
-            }
-
-            apt::key { 'midonetkey':
-                key        => $midonet_key,
-                key_source => $midonet_key_url
+    case $::osfamily {
+        'Debian': {
+            class {'midonet_repository::ubuntu':
+                midonet_repo            => $midonet_repo,
+                midonet_openstack_repo  => $midonet_openstack_repo,
+                midonet_thirdparty_repo => $midonet_thirdparty_repo,
+                midonet_stage           => $midonet_stage,
+                openstack_release       => $openstack_release,
+                midonet_key_url         => $midonet_key_url,
+                midonet_key             => $midonet_key
             }
         }
 
+        'RedHat': {
+            class {'midonet_repository::centos':
+                midonet_repo            => $midonet_repo,
+                midonet_openstack_repo  => $midonet_openstack_repo,
+                midonet_thirdparty_repo => $midonet_thirdparty_repo,
+                midonet_stage           => $midonet_stage,
+                openstack_release       => $openstack_release,
+                midonet_key_url         => $midonet_key_url
+            }
+        }
+
+        default: {
+            fail('Operative System not supported by this module')
+        }
     }
+}

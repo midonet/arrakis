@@ -1,33 +1,34 @@
 Arrakis
 =======
 
-Puppet modules to deploy MidoNet on top of OpenStack.
+Arrakis contains the Puppet modules to deploy Midonet packages. Each module
+defines tests against the following distributions:
 
-If you are creating modules, please try to mirror the actual target system directory structure in the /files and /templates folder.
+ * CentOS 6.6
+ * CentOS 7
+ * Ubuntu 12.04
+ * Ubuntu 14.04
 
-An example for this can be found in the module midonet api.
-What you can see here is that the template is used from the same location in the /templates folder where it is used on the target system.  This avoids problems in the future that may appear with overlapping file names.
-```
-  file {"/usr/share/midonet-api/WEB-INF/web.xml":
-            ensure => "file",
-            path => "/usr/share/midonet-api/WEB-INF/web.xml",
-            content => template("midonet_api/usr/share/midonet-api/WEB-INF/web.xml.erb"),
-            mode => "0644",
-            owner => "root",
-            group => "root",
-          }
-```
-Note that the file in puppet contains the suffix .erb.
 
-This is the corresponding example for a puppet file resource:
-```
-  file {"/etc/tomcat6/Catalina/localhost/midonet-api.xml":
-            ensure => "file",
-            path => "/etc/tomcat6/Catalina/localhost/midonet-api.xml",
-            source => "puppet:///modules/midonet_api/etc/tomcat6/Catalina/localhost/midonet-api.xml",
-            mode => "0644",
-            owner => "root",
-            group => "root",
-          }
-```
+Build arrakis modules
+---------------------
 
+To build arrakis modules, you will need to install:
+
+ * ruby >= 1.9.3
+ * ruby-dev >= 1.9.3
+ * GCC compile tools (make, autoconf, automake). Install build-essential if you
+   are running in a Debian-based machine and "Development Tools" if you are
+   running in a Red-Hat based machine
+
+
+Testing all the modules
+-----------------------
+
+To test all the modules and make sure they are compatible with the
+abovementioned Operative Systems, run this directory's binary:
+
+    $ ./test-arrakis.sh
+
+Each module has its own README to stablish how to use it, tested it, and install
+it.

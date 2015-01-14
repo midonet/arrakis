@@ -41,11 +41,11 @@ Puppetfile.lock
 */.c9/
 
 # Kitchen files
-**/.kitchen/
+.kitchen/
 
 # Librarian files
-**/.librarian/
-**/.tmp/
+.librarian/
+.tmp/
 
 # Vim files
 **.swp

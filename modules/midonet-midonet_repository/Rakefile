@@ -20,7 +20,7 @@ end
 
 task :lint do
   Dir['manifests/**/*.pp'].each do |manifest|
-    sh "puppet-lint --no-autoloader_layout-check #{manifest}"
+    sh "puppet-lint --no-80chars-check --no-autoloader_layout-check #{manifest}"
   end
 end
 
