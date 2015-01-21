@@ -57,15 +57,41 @@ get_distro
 @test 'midonet packages are available' {
     case $distro in
         ubuntu)
-            run sudo apt-get install -y midonet-api python-midonetclient python-neutron-plugin-midonet
-            run sudo apt-get download midolman
+            run bash -c "apt-cache search mido | grep midolman"
+            [ "$status" -eq 0 ]
+            run bash -c "apt-cache search mido | grep midonet-api"
+            [ "$status" -eq 0 ]
+            run bash -c "apt-cache search mido | grep python-midonetclient"
+            [ "$status" -eq 0 ]
+            run bash -c "apt-cache search mido | grep python-neutron-plugin-midonet"
             [ "$status" -eq 0 ]
             ;;
         centos|red-hat)
-            run sudo yum install -y midolman midonet-api python-midonetclient python-neutron-plugin-midonet
+            run bash -c "yum search mido | grep midolman"
+            [ "$status" -eq 0 ]
+            run bash -c "yum search mido | grep midonet-api"
+            [ "$status" -eq 0 ]
+            run bash -c "yum search mido | grep python-midonetclient"
+            [ "$status" -eq 0 ]
+            run bash -c "yum search mido | grep python-neutron-plugin-midonet"
             [ "$status" -eq 0 ]
             ;;
         *)
             exit 1;
+    esac
+}
+
+@test 'zookeeper is running' {
+    case $distro in
+        ubuntu)
+          run sudo /usr/share/zookeeper/bin/zkServer.sh status
+          [ "$status" -eq 0 ]
+          ;;
+        centos|red-hat)
+          run sudo /usr/sbin/zkServer.sh status
+          [ "$status" -eq 0 ]
+          ;;
+        *)
+          exit 1;
     esac
 }

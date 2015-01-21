@@ -1,7 +1,7 @@
-# == Class: midonet_repository::centos
-# NOTE: don't use this class, use midonet_repository(::init) instead
+# == Class: midonet::repository::centos
+# NOTE: don't use this class, use midonet::repository(::init) instead
 
-class midonet_repository::centos (
+class midonet::repository::centos (
     $midonet_repo,
     $midonet_openstack_repo,
     $midonet_thirdparty_repo,

@@ -1,10 +1,10 @@
 {
-  "name": "midonet-midonet_repository",
+  "name": "midonet-midonet",
   "version": "2014.11.0",
   "author": "midonet",
-  "summary": "Configure the MidoNet repositories",
+  "summary": "Configure and install MidoNet components",
   "license": "Apache 2.0",
-  "source": "https://github.com/midonet/Arrakis",
+  "source": "https://github.com/midonet/arrakis",
   "project_page": "http://midonet.org",
   "issues_url": "https://midonet.atlassian.net",
   "dependencies": [

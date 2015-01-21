@@ -1,4 +1,4 @@
-# == Class: midonet_repository
+# == Class: midonet::repository
 #
 # Prepare the midonet repositories to install packages.
 #
@@ -30,7 +30,7 @@
 #
 # The easiest way to run the class is:
 #
-#      include midonet_repository
+#      include midonet::repository
 #
 # And puppet will configure the system to use the latest stable version
 # of MidoNet OSS.
@@ -39,7 +39,7 @@
 # override the default's midonet_repository atributes by a resource-like
 # declaration:
 #
-#     class { 'midonet_repository':
+#     class { 'midonet::repository':
 #         midonet_repo            => 'http://repo.midonet.org/midonet/v2014.11',
 #         midonet_openstack_repo  => 'http://repo.midonet.org/openstack',
 #         midonet_thirdparty_repo => 'http://repo.midonet.org/misc',
@@ -51,13 +51,13 @@
 #
 # or use a YAML file using the same attributes, accessible from Hiera:
 #
-#     midonet_repository::midonet_repo: 'http://repo.midonet.org/midonet/v2014.11'
-#     midonet_repository::midonet_openstack_repo: 'http://repo.midonet.org/openstack'
-#     midonet_repository::midonet_thirdparty_repo: 'http://repo.midonet.org/misc'
-#     midonet_repository::midonet_key: '50F18FCF'
-#     midonet_repository::midonet_stage: 'stable'
-#     midonet_repository::midonet_key_url: 'http://repo.midonet.org/packages.midokura.key'
-#     midonet_repository::openstack_release: 'juno'
+#     midonet::repository::midonet_repo: 'http://repo.midonet.org/midonet/v2014.11'
+#     midonet::repository::midonet_openstack_repo: 'http://repo.midonet.org/openstack'
+#     midonet::repository::midonet_thirdparty_repo: 'http://repo.midonet.org/misc'
+#     midonet::repository::midonet_key: '50F18FCF'
+#     midonet::repository::midonet_stage: 'stable'
+#     midonet::repository::midonet_key_url: 'http://repo.midonet.org/packages.midokura.key'
+#     midonet::repository::openstack_release: 'juno'
 #
 #
 # === Authors
@@ -80,7 +80,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-class midonet_repository (
+class midonet::repository (
     $midonet_repo,
     $midonet_openstack_repo,
     $midonet_thirdparty_repo,
@@ -91,7 +91,7 @@ class midonet_repository (
 
     case $::osfamily {
         'Debian': {
-            class {'midonet_repository::ubuntu':
+            class {'midonet::repository::ubuntu':
                 midonet_repo            => $midonet_repo,
                 midonet_openstack_repo  => $midonet_openstack_repo,
                 midonet_thirdparty_repo => $midonet_thirdparty_repo,
@@ -103,7 +103,7 @@ class midonet_repository (
         }
 
         'RedHat': {
-            class {'midonet_repository::centos':
+            class {'midonet::repository::centos':
                 midonet_repo            => $midonet_repo,
                 midonet_openstack_repo  => $midonet_openstack_repo,
                 midonet_thirdparty_repo => $midonet_thirdparty_repo,

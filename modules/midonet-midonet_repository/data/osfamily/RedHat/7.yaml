@@ -1,7 +1,0 @@
----
-midonet_repository::midonet_repo: 'http://repo.midonet.org/midonet/v2014.11/RHEL'
-midonet_repository::midonet_openstack_repo: 'http://repo.midonet.org/openstack-juno/RHEL'
-midonet_repository::midonet_thirdparty_repo: 'http://repo.midonet.org/misc/RHEL'
-midonet_repository::midonet_stage: 'stable'
-midonet_repository::midonet_key_url: 'http://repo.midonet.org/packages.midokura.key'
-midonet_repository::openstack_release: 'juno'
