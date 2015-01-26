@@ -8,14 +8,6 @@
 #   Full list of ZooKeeper servers that run in the same cluster.
 # [*server_id*]
 #   Identifier of this ZooKeeper server in the cluster.
-# [*zk_server_bin*]
-#   Location of the zkServer.sh bin. The module will discover the default binary
-#   depending on the underlay OS. So you might won't need to change it.
-# [*conf_file*]
-#   Zookeeper configuration file. The module will discover the default file
-#   depending on the underlay OS. So you might won't need to change it.
-# [*data_dir*]
-#   Directory where to save the data. It defaults to: /var/lib/zookeeper/data
 #
 # === Examples
 #
@@ -60,7 +52,7 @@
 #         server_id => 3}
 #
 # defining the same servers for each puppet node, but using a different
-# server_id for each one
+# server_id for each one. NOTE: node_X can be hostnames or IP addresses.
 #
 # you can alternatively use the Hiera.yaml style
 #
@@ -95,19 +87,13 @@
 # limitations under the License.
 #
 class midonet::zookeeper($servers,
-                         $server_id,
-                         $zk_server_bin,
-                         $conf_file,
-                         $data_dir)
+                         $server_id)
 {
     class { 'midonet::zookeeper::install':
     } ->
 
     class {'midonet::zookeeper::run':
         servers       => $servers,
-        server_id     => $server_id,
-        conf_file     => $conf_file,
-        zk_server_bin => $zk_server_bin,
-        data_dir      => $data_dir,
+        server_id     => $server_id
     }
 }
