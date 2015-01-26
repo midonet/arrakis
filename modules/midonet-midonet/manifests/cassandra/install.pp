@@ -1,6 +1,6 @@
-# == Class: midonet::zookeeper::install
-# Check out the midonet::zookeeper class for a full understanding of
-# how to use the zookeeper resource
+# == Class: midonet::cassandra::install
+# Check out the midonet::cassandra class for a full understanding of
+# how to use the cassandra resource
 #
 # === Authors
 #
@@ -22,8 +22,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-class midonet::zookeeper::install {
+class midonet::cassandra::install {
 
     require midonet::repository
 
@@ -33,16 +32,16 @@ class midonet::zookeeper::install {
         }
     }
 
-    package {'zookeeper':
-        ensure  => present,
+    package {'dsc21':
+        ensure  => '2.1.2-1',
         require => [Class['java'], Exec['update-repos']]
     }
 
-    if $::osfamily == 'Debian' {
-        # This daemon package only exists in Debian distributions
-        package {'zookeeperd':
-            ensure  => present,
-            require => Package['zookeeper']
-        }
+    file {'/usr/share/cassandra/apache-cassandra.jar':
+        ensure  => link,
+        target  => '/usr/share/cassandra/apache-cassandra-2.1.2.jar',
+        owner   => 'cassandra',
+        group   => 'cassandra',
+        require => Package['dsc21']
     }
 }

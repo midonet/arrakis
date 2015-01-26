@@ -1,6 +1,6 @@
-# == Class: midonet::zookeeper::install
-# Check out the midonet::zookeeper class for a full understanding of
-# how to use the zookeeper resource
+# == Class: midonet::midonet-agent::run
+# Check out the midonet::midonet-agent class for a full understanding of
+# how to use the midonet-agent resource
 #
 # === Authors
 #
@@ -22,27 +22,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+class midonet::midonet-agent::run (
+  $zk_servers,
+  $cs_seeds) {
 
-class midonet::zookeeper::install {
+    require midonet::midonet-agent::install
 
-    require midonet::repository
+    file {'/etc/midolman/midolman.conf':
+        ensure   => present,
+        content  => template('midonet/midonet-agent/midolman.conf.erb'),
+        require  => Package['midolman']
+    } ~>
 
-    if ! defined(Class['java']) {
-        class {'java':
-            distribution => 'jre'
-        }
-    }
-
-    package {'zookeeper':
-        ensure  => present,
-        require => [Class['java'], Exec['update-repos']]
-    }
-
-    if $::osfamily == 'Debian' {
-        # This daemon package only exists in Debian distributions
-        package {'zookeeperd':
-            ensure  => present,
-            require => Package['zookeeper']
-        }
+    service {'midolman':
+        ensure => running
     }
 }

@@ -8,11 +8,10 @@
   "project_page": "http://midonet.org",
   "issues_url": "https://midonet.atlassian.net",
   "dependencies": [
-    {
-    "name":"ripienaar-module_data","version_requirement":">=0.0.3",
-    "name":"puppetlabs-stdlib","version_requirement":">= 1.0.0",
-    "name":"puppetlabs-apt","version_requirement":">=1.7.0"
-    }
+    { "name":"ripienaar-module_data","version_requirement":">=0.0.3" },
+    { "name":"puppetlabs-stdlib","version_requirement":">= 1.0.0" },
+    { "name":"puppetlabs-apt","version_requirement":">=1.7.0" },
+    { "name":"puppetlabs-java","version_requirement":">=1.3.0" }
   ],
   "tags": ["openstack", "sdn", "midonet"],
   "operatingsystem_support": [

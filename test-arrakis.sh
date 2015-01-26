@@ -20,7 +20,7 @@ for i in modules/* ; do
     echo "Running puppet-lint for code convention errors for $i"
     rake lint
     echo "Running kitchen test suite for: $i"
-    kitchen test --concurrency=5
+    kitchen test
     check_status
     cd -
   fi

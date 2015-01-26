@@ -2,3 +2,5 @@
 # Repository-based attributes
 midonet::repository::midonet_openstack_repo: 'http://repo.midonet.org/openstack-icehouse/RHEL'
 midonet::repository::openstack_release: 'icehouse'
+
+midonet::zookeeper::run::java_home: '/etc/alternatives/jre_1.7.0'

@@ -2,6 +2,7 @@
 driver:
   name: docker
   use_sudo: false
+  disable_upstart: false
 
 provisioner:
   name: puppet_apply
@@ -15,15 +16,27 @@ platforms:
   - name: ubuntu-12.04
     driver_config:
         image: midonet/ubuntu:12.04
+        privileged: true
+        run_command: /sbin/init
   - name: ubuntu-14.04
     driver_config:
         image: midonet/ubuntu:14.04
+        privileged: true
+        run_command: /sbin/init
   - name: centos-6.6
     driver_config:
         image: midonet/centos:centos6
+        privileged: true
+        ssh_timeout: 10
+        ssh_retries: 5
   - name: centos-7
     driver_config:
         image: midonet/centos:centos7
+        privileged: true
+        volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
+        run_command: /usr/sbin/init
+        ssh_timeout: 10
+        ssh_retries: 5
 
 suites:
   - name: default
