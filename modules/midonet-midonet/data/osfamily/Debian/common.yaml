@@ -7,10 +7,27 @@ midonet::repository::midonet_stage: 'stable'
 midonet::repository::midonet_key_url: 'http://repo.midonet.org/packages.midokura.key'
 
 # Zookeeper-based attributes
-midonet::zookeeper::servers: 
+midonet::zookeeper::servers:
   - id: 1
     host: 'localhost'
 midonet::zookeeper::server_id: '1'
-midonet::zookeeper::conf_file: '/etc/zookeeper/conf/zoo.cfg'
-midonet::zookeeper::zk_server_bin: '/usr/share/zookeeper/bin/zkServer.sh'
-midonet::zookeeper::data_dir: '/var/lib/zookeeper'
+
+midonet::zookeeper::run::conf_env_file: '/etc/zookeeper/zookeeper-env.sh'
+midonet::zookeeper::run::java_home: '/usr/lib/jvm/java-7-openjdk-amd64'
+midonet::zookeeper::run::conf_file: '/etc/zookeeper/zoo.cfg'
+midonet::zookeeper::run::data_dir: '/var/lib/zookeeper'
+
+# Cassandra-based attributes
+midonet::cassandra::seeds:
+  - 'localhost'
+midonet::cassandra::seed_address: 'localhost'
+
+midonet::cassandra::run::conf_dir: '/etc/cassandra'
+midonet::cassandra::run::pid_dir: '/var/run/cassandra'
+
+# Midonet Host Agent-based attributes
+midonet::midonet-agent::zk_servers:
+    - ip: 'localhost'
+      port: 2181
+midonet::midonet-agent::cassandra_seeds:
+    - 'localhost'

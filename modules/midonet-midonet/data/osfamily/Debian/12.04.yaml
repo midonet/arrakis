@@ -1,3 +1,7 @@
 --- # Repository-based attributes
 midonet::repository::midonet_openstack_repo: 'http://repo.midonet.org/openstack-icehouse'
 midonet::repository::openstack_release: 'icehouse'
+
+# Zookeeper-based attributes
+midonet::zookeeper::run::zk_server_bin: '/usr/sbin/zkServer.sh'
+midonet::zookeeper::run::conf_file: '/etc/zookeeper/zoo.cfg'
