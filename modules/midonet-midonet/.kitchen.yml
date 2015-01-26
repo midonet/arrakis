@@ -21,9 +21,11 @@ platforms:
   - name: centos-6.6
     driver_config:
         image: midonet/centos:centos6
+        privileged: true
   - name: centos-7
     driver_config:
         image: midonet/centos:centos7
+        privileged: true
 
 suites:
   - name: default

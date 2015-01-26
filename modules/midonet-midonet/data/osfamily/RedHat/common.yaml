@@ -10,6 +10,20 @@ midonet::zookeeper::servers:
   - id: 1
     host: 'localhost'
 midonet::zookeeper::server_id: '1'
-midonet::zookeeper::conf_file: '/etc/zookeeper/zoo.cfg'
-midonet::zookeeper::zk_server_bin: '/usr/sbin/zkServer.sh'
-midonet::zookeeper::data_dir: '/var/lib/zookeeper/data'
+
+midonet::zookeeper::install::jre_package: 'java-1.7.0-openjdk'
+midonet::zookeeper::run::conf_env_file: '/etc/zookeeper/zookeeper-env.sh'
+midonet::zookeeper::run::conf_file: '/etc/zookeeper/zoo.cfg'
+midonet::zookeeper::run::zk_server_bin: '/usr/sbin/zkServer.sh'
+midonet::zookeeper::run::data_dir: '/var/lib/zookeeper/data'
+midonet::zookeeper::run::java_home: '/usr/java/default'
+
+# Cassandra-based attributes
+midonet::cassandra::seeds:
+  - 'localhost'
+midonet::cassandra::seed_address: 'localhost'
+
+midonet::cassandra::install::jre_package: 'java-1.7.0-openjdk'
+
+midonet::cassandra::run::conf_dir: '/etc/cassandra'
+midonet::cassandra::run::pid_dir: '/var/run/cassandra'

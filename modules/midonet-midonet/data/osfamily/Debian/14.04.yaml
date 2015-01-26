@@ -2,3 +2,7 @@
 # Repository-based attributes
 midonet::repository::midonet_openstack_repo: "http://repo.midonet.org/openstack-juno"
 midonet::repository::openstack_release: 'juno'
+
+# Zookeeper-based attributes
+midonet::zookeeper::run::zk_server_bin: '/usr/share/zookeeper/bin/zkServer.sh'
+midonet::zookeeper::run::conf_file: '/etc/zookeeper/conf/zoo.cfg'
