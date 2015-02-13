@@ -59,7 +59,6 @@ get_distro
 }
 
 @test 'midonet packages are available' {
-    skip
     case $distro in
         ubuntu)
             run bash -c "apt-cache search mido | grep midolman"
@@ -128,6 +127,36 @@ get_distro
           ;;
         centos|red-hat)
           run sudo service midolman status
+          [ "$status" -eq 0 ]
+          ;;
+        *)
+          exit 1;
+    esac
+}
+
+@test 'midonet-api is running' {
+    case $distro in
+        ubuntu)
+          run sudo service tomcat7 status
+          [ "$status" -eq 0 ]
+          ;;
+        centos|red-hat)
+          run sudo service tomcat status
+          [ "$status" -eq 0 ]
+          ;;
+        *)
+          exit 1;
+    esac
+}
+
+@test 'midonet-cli is installed' {
+    case $distro in
+        ubuntu)
+          run bash -c "dpkg -l | grep python-midonetclient"
+          [ "$status" -eq 0 ]
+          ;;
+        centos|red-hat)
+          run bash -c "rpm -qa | grep python-midonetclient"
           [ "$status" -eq 0 ]
           ;;
         *)

@@ -38,8 +38,8 @@ class midonet::cassandra::run($seeds,
     file {"${conf_dir}/cassandra.yaml":
         ensure  => present,
         content => template('midonet/cassandra/cassandra.yaml.erb'),
-        owner  => 'root',
-        group  => 'root'
+        owner   => 'root',
+        group   => 'root'
     } ->
 
     file {"${conf_dir}/cassandra-env.sh":

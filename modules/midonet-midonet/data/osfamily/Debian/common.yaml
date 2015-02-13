@@ -26,8 +26,16 @@ midonet::cassandra::run::conf_dir: '/etc/cassandra'
 midonet::cassandra::run::pid_dir: '/var/run/cassandra'
 
 # Midonet Host Agent-based attributes
-midonet::midonet-agent::zk_servers:
+midonet::midonet_agent::zk_servers:
     - ip: 'localhost'
       port: 2181
-midonet::midonet-agent::cassandra_seeds:
+midonet::midonet_agent::cassandra_seeds:
     - 'localhost'
+
+# Midonet API-based attributes
+midonet::midonet_api::zk_servers:
+    - ip: 'localhost'
+      port: 2181
+midonet::midonet_api::keystone_auth: false
+midonet::midonet_api::vtep: false
+midonet::midonet_api::tomcat_package: 'tomcat7'

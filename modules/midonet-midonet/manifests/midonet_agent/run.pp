@@ -1,6 +1,6 @@
-# == Class: midonet::midonet-agent::run
-# Check out the midonet::midonet-agent class for a full understanding of
-# how to use the midonet-agent resource
+# == Class: midonet::midonet_agent::run
+# Check out the midonet::midonet_agent class for a full understanding of
+# how to use the midonet_agent resource
 #
 # === Authors
 #
@@ -22,16 +22,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-class midonet::midonet-agent::run (
+class midonet::midonet_agent::run (
   $zk_servers,
   $cs_seeds) {
 
-    require midonet::midonet-agent::install
+    require midonet::midonet_agent::install
 
     file {'/etc/midolman/midolman.conf':
-        ensure   => present,
-        content  => template('midonet/midonet-agent/midolman.conf.erb'),
-        require  => Package['midolman']
+        ensure  => present,
+        content => template('midonet/midonet-agent/midolman.conf.erb'),
+        require => Package['midolman']
     } ~>
 
     service {'midolman':

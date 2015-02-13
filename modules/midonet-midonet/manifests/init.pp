@@ -15,7 +15,9 @@
 # - midonet::repository
 # - midonet::cassandra
 # - midonet::zookeeper
-# - midonet::midonet-agent
+# - midonet::midonet_agent
+# - midonet::midonet_api
+# - midonet::midonet_cli
 #
 # === Authors
 #
@@ -46,8 +48,14 @@ class midonet {
     class {'midonet::cassandra': }
 
     # Add midonet-agent
-    class { 'midonet::midonet-agent':
+    class { 'midonet::midonet_agent':
         require => [Class['midonet::cassandra'],
                     Class['midonet::zookeeper']]
     }
+
+    # Add midonet-api
+    class {'midonet::midonet_api':}
+
+    # Add midonet-cli
+    class {'midonet::midonet_cli':}
 }
