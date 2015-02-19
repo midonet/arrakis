@@ -18,6 +18,7 @@
 # - midonet::midonet_agent
 # - midonet::midonet_api
 # - midonet::midonet_cli
+# - midonet::neutron_plugin
 #
 # === Authors
 #
@@ -58,4 +59,5 @@ class midonet {
 
     # Add midonet-cli
     class {'midonet::midonet_cli':}
+
 }

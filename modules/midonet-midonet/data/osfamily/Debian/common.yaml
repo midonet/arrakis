@@ -1,6 +1,6 @@
 ---
 # Repository-based attributes
-midonet::repository::midonet_repo: 'http://repo.midonet.org/midonet/v2014.11'
+midonet::repository::midonet_repo: 'http://repo.midonet.org/midonet/v2015.01'
 midonet::repository::midonet_thirdparty_repo: 'http://repo.midonet.org/misc'
 midonet::repository::midonet_key: '50F18FCF'
 midonet::repository::midonet_stage: 'stable'
@@ -39,3 +39,9 @@ midonet::midonet_api::zk_servers:
 midonet::midonet_api::keystone_auth: false
 midonet::midonet_api::vtep: false
 midonet::midonet_api::tomcat_package: 'tomcat7'
+
+# Neutron Plugin based attributes
+midonet::neutron_plugin::midonet_api_ip: 'localhost'
+midonet::neutron_plugin::username: 'fake_user'
+midonet::neutron_plugin::password: 'fake_password'
+midonet::neutron_plugin::project_id: 'service'

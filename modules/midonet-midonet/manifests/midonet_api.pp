@@ -102,6 +102,7 @@ class midonet::midonet_api(
         zk_servers     => $zk_servers,
         keystone_auth  => $keystone_auth,
         tomcat_package => $tomcat_package,
-        vtep           => $vtep
+        vtep           => $vtep,
+        api_ip         => $api_ip
     }
 }

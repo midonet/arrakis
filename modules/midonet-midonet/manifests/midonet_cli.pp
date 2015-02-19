@@ -33,6 +33,7 @@
 class midonet::midonet_cli {
 
     package {'python-midonetclient':
-        ensure => present
+        ensure  => present,
+        require => Exec['update-repos']
     }
 }

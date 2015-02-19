@@ -27,7 +27,7 @@ class midonet::midonet_api::run (
   $keystone_auth,
   $vtep,
   $tomcat_package,
-  $api_ip=undef) {
+  $api_ip) {
 
     require midonet::midonet_api::install
 
