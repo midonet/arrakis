@@ -79,7 +79,7 @@ class midonet::neutron_plugin (
         require => Exec['update-repos']
     }
 
-    file {['/etc/neutron','/etc/neutron/plugins/','/etc/neutron/plugins/midonet']:
+    file {'/etc/neutron/plugins/midonet':
         ensure  => directory,
         owner   => 'root',
         group   => 'root',
@@ -92,12 +92,10 @@ class midonet::neutron_plugin (
         require => Package['python-neutron-plugin-midonet']
     }
 
-    if $::osfamily == 'RedHat' {
-        file {'/etc/neutron/plugin.ini':
-          ensure  => link,
-          target  => '/etc/neutron/plugins/midonet/midonet.ini',
-          require => File['/etc/neutron/plugins/midonet/midonet.ini']
-        }
+    file {'/etc/neutron/plugin.ini':
+      ensure  => link,
+      target  => '/etc/neutron/plugins/midonet/midonet.ini',
+      require => File['/etc/neutron/plugins/midonet/midonet.ini']
     }
 
     if $::osfamily == 'Debian' {
