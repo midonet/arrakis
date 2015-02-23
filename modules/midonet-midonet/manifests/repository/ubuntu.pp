@@ -83,8 +83,6 @@ class midonet::repository::ubuntu (
                 include_src => false
             }
 
-            apt::ppa {"cloud-archive:${openstack_release}": }
-
             # Dummy exec to wrap apt_update
             exec {'update-repos':
                 command => '/bin/true',
