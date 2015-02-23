@@ -1,15 +1,14 @@
 {
   "name": "midonet-midonet",
-  "version": "2015.1.0",
+  "version": "2015.1.2",
   "author": "midonet",
   "summary": "Configure and install MidoNet components",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/midonet/arrakis",
   "project_page": "http://midonet.org",
   "issues_url": "https://midonet.atlassian.net",
   "dependencies": [
     { "name":"ripienaar-module_data","version_requirement":">=0.0.3" },
-    { "name":"puppetlabs-stdlib","version_requirement":">= 1.0.0" },
     { "name":"puppetlabs-apt","version_requirement":">=1.7.0" },
     { "name":"puppetlabs-java","version_requirement":">=1.3.0" }
   ],

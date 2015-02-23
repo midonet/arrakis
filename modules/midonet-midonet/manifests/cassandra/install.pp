@@ -34,7 +34,7 @@ class midonet::cassandra::install {
     }
 
     package {'dsc21':
-        ensure  => '2.1.2-1',
+        ensure  => latest,
         require => [Class['java'], Exec['update-repos']]
     }
 
