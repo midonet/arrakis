@@ -20,15 +20,3 @@ To build arrakis modules, you will need to install:
  * GCC compile tools (make, autoconf, automake). Install build-essential if you
    are running in a Debian-based machine and "Development Tools" if you are
    running in a Red-Hat based machine
-
-
-Testing all the modules
------------------------
-
-To test all the modules and make sure they are compatible with the
-abovementioned Operative Systems, run this directory's binary:
-
-    $ ./test-arrakis.sh
-
-Each module has its own README to stablish how to use it, tested it, and install
-it.
