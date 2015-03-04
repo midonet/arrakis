@@ -99,10 +99,13 @@ class midonet::midonet_api(
     }
 
     class {'midonet::midonet_api::run':
-        zk_servers     => $zk_servers,
-        keystone_auth  => $keystone_auth,
-        tomcat_package => $tomcat_package,
-        vtep           => $vtep,
-        api_ip         => $api_ip
+        zk_servers           => $zk_servers,
+        keystone_auth        => $keystone_auth,
+        tomcat_package       => $tomcat_package,
+        vtep                 => $vtep,
+        api_ip               => $api_ip,
+        keystone_host        => $keystone_host,
+        keystone_port        => $keystone_port,
+        keystone_admin_token => $keystone_admin_token
     }
 }
