@@ -30,7 +30,8 @@ class midonet::midonet_api::run (
   $api_ip,
   $keystone_host,
   $keystone_port,
-  $keystone_admin_token
+  $keystone_admin_token,
+  $keystone_tenant_name
 ) {
 
     require midonet::midonet_api::install

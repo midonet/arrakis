@@ -290,7 +290,8 @@ would be:
         api_ip               => '92.234.12.4',
         keystone_host        => '92.234.12.9',
         keystone_port        => 35357  (35357 is already the default)
-        keystone_admin_token => 'arrakis'
+        keystone_admin_token => 'arrakis',
+        keystone_tenant_name => 'other-than-services' ('services' by default)
     }
 
 You can alternatively use the Hiera's yaml style:
@@ -305,6 +306,7 @@ You can alternatively use the Hiera's yaml style:
     midonet::midonet_api::keystone_host: '92.234.12.9'
     midonet::midonet_api::keystone_port: 35357
     midonet::midonet_api::keystone_admin_token: 'arrakis'
+    midonet::midonet_api::keystone_tenant_name: 'other-than-services'
 
 Please note that Zookeeper port is not mandatory and defaulted to 2181.
 
