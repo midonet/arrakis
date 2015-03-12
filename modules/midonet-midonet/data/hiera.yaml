@@ -1,5 +1,6 @@
 ---
 :hierarchy:
     - osfamily/%{::osfamily}/%{::lsbmajdistrelease}
+    - osfamily/%{::osfamily}/%{::lsbdistrelease}
     - osfamily/%{::osfamily}/common
     - common

@@ -70,14 +70,10 @@ the Hiera configuration file that you are using):
     ---
     :backends:
       - yaml
+      - module_data
     :yaml:
       :datadirs:
-      - /etc/puppet/hieradata
-      - /etc/puppet/modules/midonet/data
-    :hierarchy:
-      - osfamily/%{::osfamily}/%{::lsbmajdistrelease}
-      - osfamily/%{::osfamily}/common
-      - common
+      - /var/lib/hiera
     :logger: console
 
 Any variable that you may use in your class declaration will override the
