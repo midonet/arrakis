@@ -40,9 +40,9 @@ class midonet::midonet_api::run (
         ensure  => present,
         content => template('midonet/midonet-api/web.xml.erb'),
         require => Package['midonet-api']
-    } ->
+    } ~>
 
     service {$tomcat_package:
-        ensure  => running,
+        ensure => running,
     }
 }

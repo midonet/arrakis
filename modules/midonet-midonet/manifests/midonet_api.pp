@@ -25,7 +25,7 @@
 # [*keystone_admin_token*]
 #   Keystone admin token. Not used if keystone_auth is false.
 # [*keystone_tenant_name*]
-#   Keystone tenant name. 'services' by default. Not used if keystone_auth is false.
+#   Keystone tenant name. 'admin' by default. Not used if keystone_auth is false.
 #
 # === Examples
 #
@@ -49,7 +49,7 @@
 #        keystone_host        => '92.234.12.9',
 #        keystone_port        => 35357  (35357 is already the default)
 #        keystone_admin_token => 'arrakis',
-#        keystone_tenant_name => 'other-than-services' ('services' by default)
+#        keystone_tenant_name => 'other-than-admin' ('admin' by default)
 #    }
 #
 # You can alternatively use the Hiera.yaml style:
@@ -64,7 +64,7 @@
 # midonet::midonet_api::keystone_host: '92.234.12.9'
 # midonet::midonet_api::keystone_port: 35357
 # midonet::midonet_api::keystone_admin_token: 'arrakis'
-# midonet::midonet_api::keystone_tenant_name: 'other-than-services'
+# midonet::midonet_api::keystone_tenant_name: 'admin'
 #
 # Please note that Zookeeper port is not mandatory and defaulted to 2181.
 #
@@ -96,7 +96,7 @@ class midonet::midonet_api(
   $keystone_host=$::ipaddress,
   $keystone_port=35357,
   $keystone_admin_token=undef,
-  $keystone_tenant_name='services',
+  $keystone_tenant_name='admin',
   $api_ip=$::ipaddress) {
 
     class {'midonet::midonet_api::install':

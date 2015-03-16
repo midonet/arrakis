@@ -32,15 +32,14 @@ class midonet::midonet_api::install($tomcat_package) {
         }
     }
 
-    package {'midonet-api':
-        ensure  => present,
-        require => Class['java']
-    }
-
     package {$tomcat_package:
         ensure  => present,
         require => Class['java']
-    }
+    } ->
+
+    package {'midonet-api':
+        ensure  => present,
+    } ->
 
     file {"/etc/${tomcat_package}/Catalina/localhost/midonet-api.xml":
         ensure  => present,
@@ -48,15 +47,5 @@ class midonet::midonet_api::install($tomcat_package) {
         owner   => 'root',
         group   => 'root',
         require => Package[$tomcat_package]
-    }
-
-    if $::osfamily == 'Debian' {
-        file {'/usr/share/tomcat7/bin/catalina.sh':
-            ensure  => present,
-            source  => 'puppet:///modules/midonet/midonet-api/catalina.sh',
-            owner   => 'root',
-            group   => 'root',
-            require => Package[$tomcat_package]
-        }
     }
 }
