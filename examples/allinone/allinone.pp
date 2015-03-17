@@ -166,7 +166,7 @@ class openstack::role::allinone inherits ::openstack::role {
   }
   class { '::openstack::setup::cirros': }
   exec { "add_midonet_rootwrap":
-      command => "/bin/echo 'mm-ctl: CommandFilter, mm-ctl, root' > /etc/nova/rootwrap.d/midonet.filters",
+      command => "/bin/echo -e '[Filters]\nmm-ctl: CommandFilter, mm-ctl, root' > /etc/nova/rootwrap.d/midonet.filters",
       require => Class['::nova::api']
   }
 }
