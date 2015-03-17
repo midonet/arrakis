@@ -49,3 +49,6 @@ Puppetfile.lock
 
 # Vim files
 **.swp
+
+# Ignore vagrant-generated files
+.vagrant

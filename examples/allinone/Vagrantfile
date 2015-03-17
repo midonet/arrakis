@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# Midonet allinone deployment. It is based on puppetlabs/openstack
+# allinone example: https://github.com/puppetlabs/puppetlabs-openstack/blob/master/manifests/role/allinone.pp
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "midonet_allinone" do |midonet_allinone|
+    # allinone.vm.box = "puppetlabs/centos-7.0-64-puppet"
+    midonet_allinone.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
+    midonet_allinone.vm.network :public_network
+    midonet_allinone.vm.network :private_network, ip: "192.168.22.4"
+    midonet_allinone.vm.network :private_network, ip: "172.16.33.4"
+    midonet_allinone.vm.network :private_network, ip: "172.16.44.4"
+
+    midonet_allinone.vm.hostname = "midonet-allinone"
+
+    midonet_allinone.vm.provider :virtualbox do |vb|
+        # Use VBoxManage to customize the VM. For example to change memory:
+        vb.customize ["modifyvm", :id, "--memory", "4098"]
+    end
+
+    midonet_allinone.vm.provision :shell, path: "run_allinone.sh"
+  end
+
+end
