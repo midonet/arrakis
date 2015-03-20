@@ -22,7 +22,7 @@ midonet::cassandra::seeds:
   - 'localhost'
 midonet::cassandra::seed_address: 'localhost'
 
-midonet::cassandra::run::conf_dir: '/etc/cassandra'
+midonet::cassandra::run::conf_dir: '/etc/cassandra/default.conf'
 midonet::cassandra::run::pid_dir: '/var/run/cassandra'
 
 # Midonet Host Agent-based attributes

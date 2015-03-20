@@ -39,14 +39,16 @@ class midonet::cassandra::run($seeds,
         ensure  => present,
         content => template('midonet/cassandra/cassandra.yaml.erb'),
         owner   => 'root',
-        group   => 'root'
-    } ->
+        group   => 'root',
+        notify  => Service['cassandra']
+    }
 
     file {"${conf_dir}/cassandra-env.sh":
         ensure => present,
         source => 'puppet:///modules/midonet/cassandra/cassandra-env.sh',
         owner  => 'root',
-        group  => 'root'
+        group  => 'root',
+        notify  => Service['cassandra']
     } ->
 
     service {'cassandra':
