@@ -1,6 +1,6 @@
 {
   "name": "midonet-midonet",
-  "version": "2015.1.7",
+  "version": "2015.1.10",
   "author": "midonet",
   "summary": "Configure and install MidoNet components",
   "license": "Apache-2.0",
