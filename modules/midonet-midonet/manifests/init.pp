@@ -45,7 +45,7 @@ class midonet {
     # Add zookeeper
     class {'midonet::zookeeper': }
 
-    # Add cassandra
+    # Add cassandra
     class {'midonet::cassandra': }
 
     # Add midonet-agent
