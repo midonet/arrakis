@@ -40,7 +40,7 @@ class midonet::zookeeper::install {
     }
 
     if $::osfamily == 'Debian' {
-        # This daemon package only exists in Debian distributions
+        # This daemon package only exists in Debian distributions
         package {'zookeeperd':
             ensure  => present,
             require => Package['zookeeper']

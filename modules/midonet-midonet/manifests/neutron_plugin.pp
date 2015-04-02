@@ -4,7 +4,7 @@
 # install Neutron (because it is a requirement of
 # 'python-neutron-plugin-midonet' package) but it does not configure it nor run
 # it. It just configure the specific midonet plugin files. It is supposed to be
-# deployed along any existing puppet module  that configures Neutron, such as
+# deployed along any existing puppet module  that configures Neutron, such as
 # puppetlabs/neutron
 #
 # === Parameters
@@ -28,7 +28,7 @@
 #    include midonet::neutron_plugin
 #
 # Although it is quite useless: it assumes that there is a Neutron server already
-# configured and a MidoNet API running localhost with Mock authentication.
+# configured and a MidoNet API running localhost with Mock authentication.
 #
 # A more advanced call would be:
 #

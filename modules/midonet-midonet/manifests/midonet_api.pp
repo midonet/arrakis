@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*zk_servers*]
-#   List of hash [{ip, port}] Zookeeper instances that run in cluster.
+#   List of hash [{ip, port}] Zookeeper instances that run in cluster.
 # [*keystone_auth*]
 #   Whether to authenticate the API request through a Keystone service. Default:
 #   false.

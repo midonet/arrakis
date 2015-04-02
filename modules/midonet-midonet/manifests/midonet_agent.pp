@@ -5,9 +5,9 @@
 # === Parameters
 #
 # [*zk_servers*]
-#   List of hash [{ip, port}] Zookeeper instances that run in cluster.
+#   List of hash [{ip, port}] Zookeeper instances that run in cluster.
 # [*cassandra_seeds]
-#   List of [ip] cassandra instances that run in cluster.
+#   List of [ip] cassandra instances that run in cluster.
 #
 # === Examples
 #
