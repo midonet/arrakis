@@ -125,12 +125,12 @@ class neutron_midonet {
   }
 
   class { 'midonet::neutron_plugin':
-      username    => 'admin',
-      password    => 'testmido',
-      project_id  => 'admin'
+      keystone_username => 'admin',
+      keystone_password => 'testmido',
+      keystone_tenant   => 'admin',
+      sync_db           => true
   }
 
-  Class['midonet::neutron_plugin'] -> Exec['neutron-db-sync']
 }
 
 class openstack::role::allinone inherits ::openstack::role {

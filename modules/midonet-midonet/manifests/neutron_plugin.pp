@@ -83,7 +83,7 @@ class midonet::neutron_plugin (
         require => Exec['update-repos']
     } ->
 
-    neutron::plugins::midonet {
+    class {'neutron::plugins::midonet':
       midonet_api_ip    => $midonet_api_ip,
       midonet_api_port  => $midonet_api_port,
       keystone_username => $keystone_username,
