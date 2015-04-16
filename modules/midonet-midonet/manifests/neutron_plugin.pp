@@ -11,40 +11,41 @@
 #
 # [*midonet_api_ip*]
 #   IP address of the midonet api service
-# [*username*]
+# [*midonet_api_port*]
+#   port address of the midonet api service
+# [*keystone_username*]
 #   Username from which midonet api will authenticate against Keystone (use
 #   neutron service username)
-# [*password*]
+# [*keystone_password*]
 #   Password from which midonet api will authenticate against Keystone (use
 #   neutron service password)
-# [*project_id*]
+# [*keystone_tenant*]
 #   Tenant from which midonet api will authenticate against Keystone (use
 #   neutron service tenant)
+# [*sync_db*]
+#   Whether 'midonet-db-manage' should run to create and/or syncrhonize the database
+#   with MidoNet specific tables. Defaults to false
 #
 # === Examples
 #
-# The easiest way to run this class is:
-#
-#    include midonet::neutron_plugin
-#
-# Although it is quite useless: it assumes that there is a Neutron server already
-# configured and a MidoNet API running localhost with Mock authentication.
-#
-# A more advanced call would be:
+# An example call would be:
 #
 #     class {'midonet::neutron_plugin':
-#         midonet_api_ip => '23.123.5.32',
-#         username       => 'neutron',
-#         password       => '32kjaxT0k3na',
-#         project_id     => 'service'
+#         midonet_api_ip    => '23.123.5.32',
+#         midonet_api_port  => '8080',
+#         keystone_username => 'neutron',
+#         keystone_password => '32kjaxT0k3na',
+#         keystone_tenant   => 'services',
+#         sync_db           => true
 #     }
 #
 # You can alternatively use the Hiera's yaml style:
 #     midonet::neutron_plugin::midonet_api_ip: '23.213.5.32'
-#     midonet::neutron_plugin::username: 'neutron'
-#     midonet::neutron_plugin::password: '32.kjaxT0k3na'
-#     midonet::neutron_plugin::midonet_api_ip: 'service'
-#     
+#     midonet::neutron_plugin::port: '8080'
+#     midonet::neutron_plugin::keystone_username: 'neutron'
+#     midonet::neutron_plugin::keystone_password: '32.kjaxT0k3na'
+#     midonet::neutron_plugin::keystone_tenant: 'services'
+#     midonet::neutron_plugin::sync_db: true
 #
 # === Authors
 #
@@ -67,42 +68,27 @@
 # limitations under the License.
 #
 class midonet::neutron_plugin (
-    $midonet_api_ip,
-    $username,
-    $password,
-    $project_id) {
+    $midonet_api_ip    = '127.0.0.1',
+    $midonet_api_port  = '8080',
+    $keystone_username = 'neutron',
+    $keystone_password = undef,
+    $keystone_tenant   = 'services',
+    $sync_db           = false
+    ) {
 
     require midonet::repository
 
     package {'python-neutron-plugin-midonet':
         ensure  => present,
         require => Exec['update-repos']
-    }
+    } ->
 
-    file {'/etc/neutron/plugins/midonet':
-        ensure  => directory,
-        owner   => 'root',
-        group   => 'root',
-        require => Package['python-neutron-plugin-midonet']
-    }
-
-    file {'/etc/neutron/plugins/midonet/midonet.ini':
-        ensure  => present,
-        content => template('midonet/neutron_plugin/midonet.ini.erb'),
-        require => Package['python-neutron-plugin-midonet']
-    }
-
-    file {'/etc/neutron/plugin.ini':
-      ensure  => link,
-      target  => '/etc/neutron/plugins/midonet/midonet.ini',
-      require => File['/etc/neutron/plugins/midonet/midonet.ini']
-    }
-
-    if $::osfamily == 'Debian' {
-        exec {'set defaults to neutron config':
-          command => '/bin/echo NEUTRON_PLUGIN_CONFIG="/etc/neutron/plugins/midonet/midonet.ini" >> /etc/default/neutron-server',
-          onlyif  => '/usr/bin/file /etc/default/neutron-server',
-          require => File['/etc/neutron/plugins/midonet/midonet.ini']
-        }
+    neutron::plugins::midonet {
+      midonet_api_ip    => $midonet_api_ip,
+      midonet_api_port  => $midonet_api_port,
+      keystone_username => $keystone_username,
+      keystone_password => $keystone_password,
+      keystone_tenant   => $keystone_tenant,
+      sync_db           => $sync_db
     }
 }
