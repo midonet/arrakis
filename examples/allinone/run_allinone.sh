@@ -24,4 +24,4 @@ sed -ie "s%bridged_network%${NETWORK}%" /etc/puppet/hieradata/common.yaml
 
 # Run the puppet manifest. Comment this line if you want to perform
 # some changes in the manifest
-# puppet apply /etc/puppet/manifests/site.pp
+puppet apply /etc/puppet/manifests/site.pp

@@ -106,6 +106,13 @@ class neutron_midonet {
     }
   }
 
+  class { 'midonet::neutron_plugin':
+      keystone_username => 'admin',
+      keystone_password => 'testmido',
+      keystone_tenant   => 'admin',
+      sync_db           => true
+  }
+
   class { '::neutron::agents::metadata':
     auth_password => $::openstack::config::neutron_password,
     shared_secret => $::openstack::config::neutron_shared_secret,
@@ -121,16 +128,9 @@ class neutron_midonet {
     interface_driver         => 'neutron.agent.linux.linux.interface.MidonetInterfaceDriver',
     dhcp_driver              => 'midonet.neutron.agent.midonet_driver.DhcpNoOpDriver',
     enable_isolated_metadata => true,
-    enabled => true,
+    enabled                  => true,
+    require                  => Class['midonet::neutron_plugin']
   }
-
-  class { 'midonet::neutron_plugin':
-      keystone_username => 'admin',
-      keystone_password => 'testmido',
-      keystone_tenant   => 'admin',
-      sync_db           => true
-  }
-
 }
 
 class openstack::role::allinone inherits ::openstack::role {
