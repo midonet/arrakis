@@ -1,0 +1,15 @@
+{
+  "name": "midonet-midonet_openstack",
+  "version": "5.0.0",
+  "author": "MidoNet",
+  "summary": "Define profiles and roles for deploy midonet with openstack",
+  "license": "Apache-2.0",
+  "source": "http://github.com/midonet/arrakis",
+  "project_page": "https://github.com/midonet/arrakis",
+  "issues_url": "http://midonet.atlassian.net",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs-openstack", "version_requirement": ">=5.0.0 <6.0.0"},
+    {"name":"midonet-midonet", "version_requirement": "=>2015.1.0"}
+  ]
+}
