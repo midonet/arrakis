@@ -13,5 +13,9 @@ class midonet_openstack::role::controller inherits ::openstack::role {
   class { '::openstack::profile::nova::api': } ->
   class { '::openstack::profile::horizon': }
   class { '::openstack::profile::auth_file': }
+  class { '::midonet_openstack::setup::sharednetwork': }
   class { '::openstack::setup::cirros': }
+
+  Class['::midonet_openstack::setup::sharednetwork'] -> Class['::midonet_openstack::profile::neutron::server']
+  Class['::midonet_openstack::setup::sharednetwork'] -> Class['::apache::service']
 }

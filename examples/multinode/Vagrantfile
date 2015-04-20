@@ -1,0 +1,127 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$configure_master = <<SCRIPT
+    apt-get -y install puppetmaster \
+        && service puppetmaster stop \
+        && echo "172.16.33.3 $(facter fqdn) $(hostname)" >> /etc/hosts \
+        && cp /vagrant/conf/puppetmaster.conf /etc/puppet/puppet.conf \
+        && cp /vagrant/conf/hiera.yaml /etc/puppet/hiera.yaml \
+        && cp /vagrant/conf/site.pp /etc/puppet/manifests/site.pp \
+        && mkdir -p /var/lib/hiera \
+        && cp /vagrant/conf/multinode.yaml /var/lib/hiera/common.yaml \
+        && puppet module install puppetlabs-openstack --version 5.0.2 \
+        && puppet module install ripienaar-module_data \
+        && puppet module install puppetlabs-java \
+        && puppet module install --force midonet-neutron \
+        && cp -r /openstack/modules/midonet-midonet_openstack /etc/puppet/modules/ \
+        && mv /etc/puppet/modules/midonet-midonet_openstack /etc/puppet/modules/midonet_openstack \
+        && cp -r /openstack/modules/midonet-midonet /etc/puppet/modules \
+        && mv /etc/puppet/modules/midonet-midonet /etc/puppet/modules/midonet \
+        && cp -r /etc/puppet/modules/module_data/lib/* /var/lib/puppet/lib
+SCRIPT
+
+$configure_agent = <<SCRIPT
+    service puppet stop \
+        && echo "172.16.33.3 puppetmaster.midokura.com puppetmaster" >> /etc/hosts \
+        && cp /vagrant/conf/puppetagent.conf /etc/puppet/puppet.conf \
+        && puppet agent --enable
+SCRIPT
+
+Vagrant.configure(2) do |config|
+
+    config.vm.define "puppetmaster" do |puppetmaster|
+      puppetmaster.vm.box = "ubuntu/trusty64"
+      puppetmaster.vm.network :private_network, ip: "172.16.33.3"  # management network
+      puppetmaster.vm.box_check_update = true
+      puppetmaster.vm.hostname = "puppetmaster"
+      puppetmaster.vm.provider "virtualbox" do |vb|
+        vb.name   = "puppet-master"
+        vb.memory = "1024"
+      end
+      puppetmaster.vm.provision "shell", inline: $configure_master
+      puppetmaster.vm.synced_folder ".", "/vagrant"
+      puppetmaster.vm.synced_folder "../..", "/openstack"
+
+      # ssh
+      puppetmaster.ssh.forward_agent = true
+    end
+
+    config.vm.define "nsdb1" do |nsdb1|
+      nsdb1.vm.box = "ubuntu/trusty64"
+      nsdb1.vm.network :private_network, ip: "172.16.33.4"  # management network
+      nsdb1.vm.box_check_update = true
+      nsdb1.vm.hostname = "nsdb1"
+      nsdb1.vm.provider "virtualbox" do |vb|
+        vb.name   = "nsdb1"
+        vb.memory = "512"
+      end
+      nsdb1.vm.provision "shell", inline: $configure_agent
+
+      # ssh
+      nsdb1.ssh.forward_agent = true
+    end
+
+    config.vm.define "nsdb2" do |nsdb2|
+      nsdb2.vm.box = "ubuntu/trusty64"
+      nsdb2.vm.network :private_network, ip: "172.16.33.5"  # management network
+      nsdb2.vm.box_check_update = true
+      nsdb2.vm.hostname = "nsdb2"
+      nsdb2.vm.provider "virtualbox" do |vb|
+        vb.name   = "nsdb2"
+        vb.memory = "512"
+      end
+      nsdb2.vm.provision "shell", inline: $configure_agent
+
+      # ssh
+      nsdb2.ssh.forward_agent = true
+    end
+
+    config.vm.define "nsdb3" do |nsdb3|
+      nsdb3.vm.box = "ubuntu/trusty64"
+      nsdb3.vm.network :private_network, ip: "172.16.33.6"  # management network
+      nsdb3.vm.box_check_update = true
+      nsdb3.vm.hostname = "nsdb3"
+      nsdb3.vm.provider "virtualbox" do |vb|
+        vb.name   = "nsdb3"
+        vb.memory = "512"
+      end
+      nsdb3.vm.provision "shell", inline: $configure_agent
+
+      # ssh
+      nsdb3.ssh.forward_agent = true
+    end
+
+    config.vm.define "controller" do |controller|
+      controller.vm.box = "ubuntu/trusty64"
+      controller.vm.network :private_network, ip: "172.16.33.7"  # management network
+      controller.vm.network :public_network
+      controller.vm.box_check_update = true
+      controller.vm.hostname = "controller"
+      controller.vm.provider "virtualbox" do |vb|
+        vb.name   = "controller"
+        vb.memory = "4098"
+      end
+      controller.vm.provision "shell", inline: $configure_agent
+
+      # ssh
+      controller.ssh.forward_agent = true
+    end
+
+    config.vm.define "compute1" do |compute1|
+      compute1.vm.box = "ubuntu/trusty64"
+      compute1.vm.network :private_network, ip: "172.16.33.8"  # management network
+      compute1.vm.network :private_network, ip: "172.16.44.8"  # data network
+      compute1.vm.box_check_update = true
+      compute1.vm.hostname = "compute1"
+      compute1.vm.provider "virtualbox" do |vb|
+        vb.name   = "compute1"
+        vb.memory = "4098"
+      end
+      compute1.vm.provision "shell", inline: $configure_agent
+
+      # ssh
+      compute1.ssh.forward_agent = true
+    end
+
+end
