@@ -1,4 +1,4 @@
-class midonet_openstack::role::allinone inherits ::openstack::role {
+class midonet_openstack::role::allinone inherits ::midonet_openstack::role {
   class { '::openstack::profile::firewall': }
   class { '::openstack::profile::rabbitmq': }
   class { '::openstack::profile::mysql': }
@@ -19,7 +19,6 @@ class midonet_openstack::role::allinone inherits ::openstack::role {
   class { '::openstack::setup::cirros': }
 
   Class['::midonet_openstack::profile::neutron::agent'] -> Class['::midonet_openstack::profile::midonet::nsdb']
-  Class['::midonet_openstack::setup::sharednetwork'] -> Class['::midonet_openstack::profile::midonet::server']
   Class['::midonet_openstack::setup::sharednetwork'] -> Class['::midonet_openstack::profile::neutron::server']
   Class['::midonet_openstack::setup::sharednetwork'] -> Class['::apache::service']
   Class['::openstack::profile::keystone'] -> Class['::openstack::setup::cirros']

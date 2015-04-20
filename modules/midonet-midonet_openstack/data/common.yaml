@@ -1,15 +1,15 @@
 openstack::region: 'openstack'
 
 ######## Networks
-openstack::network::api: 'bridged_network'
-openstack::network::external: '192.168.22.0/24'
-openstack::network::management: '172.16.33.0/24'
-openstack::network::data: '172.16.44.0/24'
+openstack::network::api: '172.17.0.0/24'
+openstack::network::external: '172.17.0.0/24'
+openstack::network::management: '172.17.0.0/24'
+openstack::network::data: '172.17.0.0/24'
 
-openstack::network::external::ippool::start: 192.168.22.100
-openstack::network::external::ippool::end: 192.168.22.200
-openstack::network::external::gateway: 192.168.22.2
-openstack::network::external::dns: 192.168.22.2
+openstack::network::external::ippool::start: 172.17.0.100
+openstack::network::external::ippool::end: 172.17.0.200
+openstack::network::external::gateway: "%{::ipaddress}"
+openstack::network::external::dns: "%{::ipaddress}"
 
 ######## Private Neutron Network
 
@@ -17,23 +17,23 @@ openstack::network::neutron::private: '10.0.0.0/24'
 
 ######## Fixed IPs (controllers)
 
-openstack::controller::address::api: 'bridged_ip'
-openstack::controller::address::management: '172.16.33.4'
-openstack::storage::address::api: 'bridged_ip'
-openstack::storage::address::management: '172.16.33.4'
+openstack::controller::address::api: "%{::ipaddress}"
+openstack::controller::address::management: "%{::ipaddress}"
+openstack::storage::address::api: "%{::ipaddress}"
+openstack::storage::address::management: "%{::ipaddress}"
 
 ######## Database
 
 openstack::mysql::root_password: 'testmido'
 openstack::mysql::service_password: 'testmido'
-openstack::mysql::allowed_hosts: ['localhost', '127.0.0.1', '172.16.33.%']
+openstack::mysql::allowed_hosts: ['localhost', '127.0.0.1', '172.17.0.%']
 
 openstack::mysql::keystone::user: 'keystone'
 openstack::mysql::keystone::pass: 'testmido'
 
 openstack::mysql::glance::user: 'glance'
 openstack::mysql::glance::pass: 'testmido'
-openstack::glance::api_servers: ['172.16.33.4:9292']
+openstack::glance::api_servers: ["%{::ipaddress}:9292"]
 
 openstack::mysql::nova::user: 'nova'
 openstack::mysql::nova::pass: 'testmido'
@@ -45,7 +45,7 @@ openstack::mysql::neutron::pass: 'testmido'
 
 openstack::rabbitmq::user: 'openstack'
 openstack::rabbitmq::password: 'testmido'
-openstack::rabbitmq::hosts: ['172.16.33.4:5672']
+openstack::rabbitmq::hosts: ["%{::ipaddress}:5672"]
 
 ######## Keystone
 
@@ -97,8 +97,19 @@ openstack::nova::password: 'testmido'
 
 openstack::neutron::password: 'testmido'
 openstack::neutron::shared_secret: 'testmido'
-openstack::neutron::core_plugin: 'midonet.neutron.plugin.MidonetPluginV2'
+openstack::neutron::core_plugin: 'midonet'
 openstack::neutron::service_plugins: []
+
+######## Ceilometer
+openstack::ceilometer::address::management: "%{::ipaddress}"
+openstack::ceilometer::mongo::username: 'mongo'
+openstack::ceilometer::mongo::password: 'mongosecretkey123'
+openstack::ceilometer::password: 'whi-truz'
+openstack::ceilometer::meteringsecret: 'ceilometersecretkey'
+
+######## Heat
+openstack::heat::password: 'zap-bang'
+openstack::heat::encryption_key: 'heatsecretkey123'
 
 ######## Horizon
 
@@ -125,14 +136,3 @@ openstack::tempest::swift_available     : false
 ######## Log levels
 openstack::verbose: 'True'
 openstack::debug: 'True'
-
-######## Ceilometer
-openstack::ceilometer::address::management: '172.16.33.4'
-openstack::ceilometer::mongo::username: 'mongo'
-openstack::ceilometer::mongo::password: 'mongosecretkey123'
-openstack::ceilometer::password: 'whi-truz'
-openstack::ceilometer::meteringsecret: 'ceilometersecretkey'
-
-######## Heat
-openstack::heat::password: 'zap-bang'
-openstack::heat::encryption_key: 'heatsecretkey123'

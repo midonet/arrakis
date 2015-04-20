@@ -1,13 +1,13 @@
 class midonet_openstack::setup::sharednetwork {
 
-  $external_network = $::midonet_openstack::config::network_external
-  $start_ip = $::midonet_openstack::config::network_external_ippool_start
-  $end_ip   = $::midonet_openstack::config::network_external_ippool_end
+  $external_network = $::openstack::config::network_external
+  $start_ip = $::openstack::config::network_external_ippool_start
+  $end_ip   = $::openstack::config::network_external_ippool_end
   $ip_range = "start=${start_ip},end=${end_ip}"
-  $gateway  = $::midonet_openstack::config::network_external_gateway
-  $dns      = $::midonet_openstack::config::network_external_dns
+  $gateway  = $::openstack::config::network_external_gateway
+  $dns      = $::openstack::config::network_external_dns
 
-  $private_network = $::midonet_openstack::config::network_neutron_private
+  $private_network = $::openstack::config::network_neutron_private
 
   neutron_network { 'public':
     tenant_name              => 'services',
