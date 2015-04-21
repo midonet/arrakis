@@ -1,7 +1,7 @@
 openstack::region: 'openstack'
 
 ######## Networks
-openstack::network::api: '<replace-host-network>'
+openstack::network::api: '192.168.2.0/24'
 openstack::network::external: '192.168.22.0/24'
 openstack::network::management: '172.16.33.0/24'
 openstack::network::data: '172.16.44.0/24'
@@ -17,9 +17,9 @@ openstack::network::neutron::private: '10.0.0.0/24'
 
 ######## Fixed IPs (controllers)
 
-openstack::controller::address::api: "<replace-controller-bridged-ip>"
+openstack::controller::address::api: "192.168.2.44"
 openstack::controller::address::management: '172.16.33.7'
-openstack::storage::address::api: "<replace-controller-bridged-ip>"
+openstack::storage::address::api: "192.168.2.44"
 openstack::storage::address::management: '172.16.33.7'
 
 ######## Database
