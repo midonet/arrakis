@@ -124,4 +124,20 @@ Vagrant.configure(2) do |config|
       compute1.ssh.forward_agent = true
     end
 
+    config.vm.define "compute2" do |compute2|
+      compute2.vm.box = "ubuntu/trusty64"
+      compute2.vm.network :private_network, ip: "172.16.33.9"  # management network
+      compute2.vm.network :private_network, ip: "172.16.44.9"  # data network
+      compute2.vm.box_check_update = true
+      compute2.vm.hostname = "compute2"
+      compute2.vm.provider "virtualbox" do |vb|
+        vb.name   = "compute2"
+        vb.memory = "4098"
+      end
+      compute2.vm.provision "shell", inline: $configure_agent
+
+      # ssh
+      compute2.ssh.forward_agent = true
+    end
+
 end
