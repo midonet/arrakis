@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_3cdc2073",
+        "filename": "modules/midonet-midonet/metadata.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002749
+      },
+      "writtenOn": "2015-04-24T06:47:13Z",
+      "side": 1,
+      "message": "2015.1.17\nFrom which code did you made the patch?",
+      "revId": "6f7100271e0f2d903875405774d304d997798c11",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
