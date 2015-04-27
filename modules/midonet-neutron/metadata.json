@@ -1,12 +1,12 @@
 {
   "name": "midonet-neutron",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "author": "StackForge Contributors",
   "summary": "Puppet module for OpenStack Neutron with Midonet",
-  "license": "Apache License 2.0",
+  "license": "Apache-2.0",
   "source": "git://github.com/midonet/arrakis.git",
-  "project_page": "http://midonet.org",
-  "issues_url": "https://midonet.atlassian.net",
+  "project_page": "http://github.com/midonet/arrakis/tree/master/modules/midonet-neutron",
+  "issues_url": "https://midonet.atlassian.net/projects/MDT",
   "requirements": [
     { "name": "pe","version_requirement": "3.x" },
     { "name": "puppet","version_requirement": "3.x" }
