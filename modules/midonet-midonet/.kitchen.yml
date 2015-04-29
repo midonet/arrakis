@@ -13,25 +13,11 @@ provisioner:
   manifest: init.pp
 
 platforms:
-  - name: ubuntu-12.04
-    driver_config:
-        image: midonet/ubuntu:12.04
-        privileged: true
-        run_command: /sbin/init
-        ssh_timeout: 10
-        ssh_retries: 5
   - name: ubuntu-14.04
     driver_config:
         image: midonet/ubuntu:14.04
         privileged: true
         run_command: /sbin/init
-        ssh_timeout: 10
-        ssh_retries: 5
-  - name: centos-6.6
-    driver_config:
-        image: midonet/centos:centos6
-        run_command: /sbin/init
-        privileged: true
         ssh_timeout: 10
         ssh_retries: 5
   - name: centos-7

@@ -1,6 +1,6 @@
 ---
 # Repository-based attributes
-midonet::repository::midonet_repo: 'http://repo.midonet.org/midonet/v2015.01/RHEL'
+midonet::repository::midonet_repo: 'http://repo.midonet.org/midonet/v2015.03/RHEL'
 midonet::repository::midonet_thirdparty_repo: 'http://repo.midonet.org/misc/RHEL'
 midonet::repository::midonet_stage: 'stable'
 midonet::repository::midonet_key_url: 'http://repo.midonet.org/packages.midokura.key'
