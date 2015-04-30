@@ -72,7 +72,7 @@ class midonet::repository::ubuntu (
             }
 
             apt::key {'datastaxkey':
-                key        => 'B999A372',
+                key        => '7E41C00F85BFC1706C4FFFB3350200F2B999A372',
                 key_source => 'http://debian.datastax.com/debian/repo_key'
             } ->
 
