@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     midonet_allinone.vm.provision :shell, path: "run_allinone.sh"
 
     midonet_allinone.vm.synced_folder ".", "/vagrant"
-    midonet_allinone.vm.synced_folder "../..", "/openstack" 
+    midonet_allinone.vm.synced_folder "../..", "/openstack"
   end
 
 end
