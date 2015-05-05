@@ -25,7 +25,11 @@
 class midonet::cassandra::run($seeds,
                               $seed_address,
                               $conf_dir,
-                              $pid_dir) {
+                              $pid_dir,
+                              $storage_port,
+                              $ssl_storage_port,
+                              $client_port,
+                              $client_port_thrift) {
 
     require midonet::cassandra::install
 

@@ -56,7 +56,7 @@
 #
 # you can alternatively use the Hiera.yaml style
 #
-#     midonet::zookeeper::servers: 
+#     midonet::zookeeper::servers:
 #         - id: 1
 #           host: 'node_1'
 #         - id: 2

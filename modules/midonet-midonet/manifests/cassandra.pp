@@ -9,6 +9,15 @@
 #  [*seed_address*]
 #    IP address to bind for this instance. (Must belong to the
 #    seeders list.
+#  [*storage_port*]
+#    Inter-node cluster communication port (defaulted to 7000).
+#  [*ssl_storage_port*]
+#    SSL Inter-node cluster communication port (defaulted to 7001).
+#  [*client_port*]
+#    Cassandra client port (defaulted to 9042).
+#  [*client_port_thrift*]
+#    Cassandra client port thrift (defaulted to 9160).
+#
 #
 # === Examples
 #
@@ -23,27 +32,45 @@
 #   would be:
 #
 #        class {'midonet::cassandra':
-#            seeds        => ['192.168.2.2'],
-#            seed_address => '192.168.2.2'
+#            seeds              => ['192.168.2.2'],
+#            seed_address       => '192.168.2.2',
+#            storage_port       => 7000,
+#            ssl_storage_port   => 7001,
+#            client_port        => 9042,
+#            client_port_thrift => 9042,
 #        }
+#
+# *  All the ports must be configured the same in all the nodes in the cluster.
 #
 # * For cluster of nodes, use the same 'seeds' value, but change the
 #   seed_address of each node:
 #
 # - On node1
 #        class {'midonet::cassandra':
-#            seeds        => ['node_1', 'node_2', 'node_3'],
-#            seed_address => 'node_1'
+#            seeds              => ['node_1', 'node_2', 'node_3'],
+#            seed_address       => 'node_1'
+#            storage_port       => 7000,
+#            ssl_storage_port   => 7001,
+#            client_port        => 9042,
+#            client_port_thrift => 9042,
 #        }
 # - On node2
 #        class {'midonet::cassandra':
-#            seeds        => ['node_1', 'node_2', 'node_3'],
-#            seed_address => 'node_2'
+#            seeds              => ['node_1', 'node_2', 'node_3'],
+#            seed_address       => 'node_2'
+#            storage_port       => 7000,
+#            ssl_storage_port   => 7001,
+#            client_port        => 9042,
+#            client_port_thrift => 9042,
 #        }
 # - On node3
 #        class {'midonet::cassandra':
-#            seeds        => ['node_1', 'node_2', 'node_3'],
-#            seed_address => 'node_3'
+#            seeds              => ['node_1', 'node_2', 'node_3'],
+#            seed_address       => 'node_3'
+#            storage_port       => 7000,
+#            ssl_storage_port   => 7001,
+#            client_port        => 9042,
+#            client_port_thrift => 9042,
 #        }
 #
 # NOTE: node_X can be either hostnames or ip addresses
@@ -76,14 +103,25 @@
 # limitations under the License.
 #
 
-class midonet::cassandra($seeds, $seed_address) {
+class midonet::cassandra($seeds,
+                         $seed_address,
+                         $storage_port       = '7000',
+                         $ssl_storage_port   = '7001',
+                         $client_port        = '9042',
+                         $client_port_thrift = '9160')
+{
 
   class {'midonet::cassandra::install':
   }
 
   class {'midonet::cassandra::run':
-    seeds        => $seeds,
-    seed_address => $seed_address
+    seeds              => $seeds,
+    seed_address       => $seed_address,
+    storage_port       => $storage_port,
+    ssl_storage_port   => $ssl_storage_port,
+    client_port        => $client_port,
+    client_port_thrift => $client_port_thrift
+
   }
 
 }
