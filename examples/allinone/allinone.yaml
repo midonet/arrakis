@@ -1,10 +1,10 @@
 openstack::region: 'openstack'
 
 ######## Networks
-openstack::network::api: 'bridged_network'
+openstack::network::api: '172.28.28.4/24'
 openstack::network::external: '192.168.22.0/24'
-openstack::network::management: '172.16.33.0/24'
-openstack::network::data: '172.16.44.0/24'
+openstack::network::management: '172.28.28.4/24'
+openstack::network::data: '192.168.22.0/24'
 
 openstack::network::external::ippool::start: 192.168.22.100
 openstack::network::external::ippool::end: 192.168.22.200
@@ -17,23 +17,23 @@ openstack::network::neutron::private: '10.0.0.0/24'
 
 ######## Fixed IPs (controllers)
 
-openstack::controller::address::api: 'bridged_ip'
-openstack::controller::address::management: '172.16.33.4'
-openstack::storage::address::api: 'bridged_ip'
-openstack::storage::address::management: '172.16.33.4'
+openstack::controller::address::api: '172.28.28.4'
+openstack::controller::address::management: '172.28.28.4'
+openstack::storage::address::api: '172.28.28.4'
+openstack::storage::address::management: '172.28.28.4'
 
 ######## Database
 
 openstack::mysql::root_password: 'testmido'
 openstack::mysql::service_password: 'testmido'
-openstack::mysql::allowed_hosts: ['localhost', '127.0.0.1', '172.16.33.%']
+openstack::mysql::allowed_hosts: ['172.28.28.4']
 
 openstack::mysql::keystone::user: 'keystone'
 openstack::mysql::keystone::pass: 'testmido'
 
 openstack::mysql::glance::user: 'glance'
 openstack::mysql::glance::pass: 'testmido'
-openstack::glance::api_servers: ['172.16.33.4:9292']
+openstack::glance::api_servers: ['172.28.28.4:9292']
 
 openstack::mysql::nova::user: 'nova'
 openstack::mysql::nova::pass: 'testmido'
@@ -45,7 +45,7 @@ openstack::mysql::neutron::pass: 'testmido'
 
 openstack::rabbitmq::user: 'openstack'
 openstack::rabbitmq::password: 'testmido'
-openstack::rabbitmq::hosts: ['172.16.33.4:5672']
+openstack::rabbitmq::hosts: ['172.28.28.4:5672']
 
 ######## Keystone
 
@@ -103,6 +103,8 @@ openstack::neutron::service_plugins: []
 ######## Horizon
 
 openstack::horizon::secret_key: 'testmido'
+openstack::horizon::horizon_server_aliases: []
+openstack::horizon::allowed_hosts: ['*']
 
 ######## Tempest
 
@@ -127,7 +129,7 @@ openstack::verbose: 'True'
 openstack::debug: 'True'
 
 ######## Ceilometer
-openstack::ceilometer::address::management: '172.16.33.4'
+openstack::ceilometer::address::management: '0.0.0.0'
 openstack::ceilometer::mongo::username: 'mongo'
 openstack::ceilometer::mongo::password: 'mongosecretkey123'
 openstack::ceilometer::password: 'whi-truz'
