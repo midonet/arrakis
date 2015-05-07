@@ -33,16 +33,24 @@ class midonet::cassandra::install {
         }
     }
 
-    package {'dsc21':
-        ensure  => latest,
+    if $::osfamily == 'Debian' {
+        package {'cassandra':
+            ensure  => '2.0.10',
+            require => [Class['java'], Exec['update-repos']],
+            before  => Package['dsc20']
+        }
+    }
+
+    package {'dsc20':
+        ensure  => '2.0.10-1',
         require => [Class['java'], Exec['update-repos']]
     }
 
     file {'/usr/share/cassandra/apache-cassandra.jar':
         ensure  => link,
-        target  => '/usr/share/cassandra/apache-cassandra-2.1.2.jar',
+        target  => '/usr/share/cassandra/apache-cassandra-2.0.10.jar',
         owner   => 'cassandra',
         group   => 'cassandra',
-        require => Package['dsc21']
+        require => Package['dsc20']
     }
 }
