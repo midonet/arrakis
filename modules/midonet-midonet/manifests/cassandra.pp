@@ -103,12 +103,13 @@
 # limitations under the License.
 #
 
-class midonet::cassandra($seeds,
-                         $seed_address,
-                         $storage_port       = '7000',
-                         $ssl_storage_port   = '7001',
-                         $client_port        = '9042',
-                         $client_port_thrift = '9160')
+class midonet::cassandra(
+  $seeds,
+  $seed_address,
+  $storage_port = '7000',
+  $ssl_storage_port = '7001',
+  $client_port = '9042',
+  $client_port_thrift = '9160')
 {
 
   class {'midonet::cassandra::install':
