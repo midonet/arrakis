@@ -84,7 +84,7 @@ class midonet::repository::centos (
             }
 
             exec {'update-repos':
-                command => '/usr/bin/yum -y update',
+                command => 'cat /dev/null', # Not need to do anything on CentOS
                 require => [Yumrepo['midonet'],
                             Yumrepo['midonet-openstack-integration'],
                             Yumrepo['midonet-third-party'],

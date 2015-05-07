@@ -89,6 +89,21 @@ get_distro
     esac
 }
 
+@test 'cassandra version is pinned to stable version' {
+    case $distro in
+        ubuntu)
+          run bash -c "sudo /usr/share/zookeeper/bin/zkServer.sh status || sudo /usr/sbin/zkServer.sh status"
+          [ "$status" -eq 0 ]
+          ;;
+        centos|red-hat)
+          run   status
+          [ "$status" -eq 0 ]
+          ;;
+        *)
+          exit 1;
+    esac
+}
+
 @test 'zookeeper is running' {
     case $distro in
         ubuntu)
