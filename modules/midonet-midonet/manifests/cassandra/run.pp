@@ -37,17 +37,31 @@ class midonet::cassandra::run($seeds,
         ensure => directory,
         owner  => 'cassandra',
         group  => 'cassandra'
-    } ->
+    }
+
+    exec {'cassandra_stop':
+        command => '/usr/sbin/service cassandra stop',
+        require => File[$pid_dir]
+    }
+
+    exec {"clean cassandra":
+        command => "/bin/rm -rf /var/lib/cassandra/*",
+        onlyif  => "/bin/cat /etc/cassandra/cassandra.yaml | /bin/grep 'Test Cluster'",
+        require => Exec['cassandra_stop']
+    }
 
     file {"${conf_dir}/cassandra.yaml":
         ensure  => present,
         content => template('midonet/cassandra/cassandra.yaml.erb'),
         owner   => 'root',
         group   => 'root',
+        require => Exec['clean cassandra'],
         notify  => Service['cassandra']
     }
 
-    service {'cassandra':
-        ensure    => running
+    service {'cassandra_start':
+        name    => 'cassandra',
+        ensure  => running,
+        require => File["${conf_dir}/cassandra.yaml"]
     }
 }
