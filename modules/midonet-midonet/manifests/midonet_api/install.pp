@@ -22,7 +22,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-class midonet::midonet_api::install($tomcat_package) {
+class midonet::midonet_api::install(
+  $tomcat_package,
+  $tomcat_port) {
     require midonet::repository
 
     if ! defined(Class['java']) {
