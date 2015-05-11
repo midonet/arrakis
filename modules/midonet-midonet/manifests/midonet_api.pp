@@ -18,6 +18,8 @@
 # [*api_ip*]
 #   Exposed IP address. By default, it exposes the first internet address that
 #   founds in the host.
+# [*api_port*]
+#   TCP listening port. By default, 8080
 # [*keystone_host*]
 #   Keystone service endpoint IP. Not used if keystone_auth is false.
 # [*keystone_port*]
@@ -97,10 +99,12 @@ class midonet::midonet_api(
   $keystone_port=35357,
   $keystone_admin_token=undef,
   $keystone_tenant_name='admin',
-  $api_ip=$::ipaddress) {
+  $api_ip=$::ipaddress,
+  $api_port='8080') {
 
     class {'midonet::midonet_api::install':
-        tomcat_package => $tomcat_package
+        tomcat_package => $tomcat_package,
+        tomcat_port    => $api_port
     }
 
     class {'midonet::midonet_api::run':
@@ -109,6 +113,7 @@ class midonet::midonet_api(
         tomcat_package       => $tomcat_package,
         vtep                 => $vtep,
         api_ip               => $api_ip,
+        api_port             => $api_port,
         keystone_host        => $keystone_host,
         keystone_port        => $keystone_port,
         keystone_admin_token => $keystone_admin_token,

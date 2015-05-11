@@ -28,6 +28,7 @@ class midonet::midonet_api::run (
   $vtep,
   $tomcat_package,
   $api_ip,
+  $api_port,
   $keystone_host,
   $keystone_port,
   $keystone_admin_token,
