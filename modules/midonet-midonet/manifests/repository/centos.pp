@@ -84,7 +84,7 @@ class midonet::repository::centos (
             }
 
             exec {'update-repos':
-                command => '/bin/cat /dev/null', # Not need to do anything on CentOS
+                command => '/usr/bin/yum clean all && /usr/bin/yum makecache', # Not need to do anything on CentOS
                 require => [Yumrepo['midonet'],
                             Yumrepo['midonet-openstack-integration'],
                             Yumrepo['midonet-third-party'],
