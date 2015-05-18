@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# Midonet allinone deployment. It is based on puppetlabs/openstack
+# allinone example: https://github.com/puppetlabs/puppetlabs-openstack/blob/master/manifests/role/allinone.pp
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+# require 'vagrant-openstack-provider'
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box       = 'allinone'
+  config.ssh.username = 'ubuntu'
+  config.vm.hostname  = "allinone"
+  config.vm.provider :openstack do |os|
+    os.openstack_auth_url = 'http://keystone.example.com/v2.0/tokens'
+    os.username           = 'openstackUser'
+    os.password           = 'openstackPassword'
+    os.tenant_name        = 'someTenant'
+    os.flavor             = 'm1.large'
+    os.image              = 'Ubuntu 14.04.1 20141114'
+    os.networks           = 'some-network'
+    os.floating_ip_pool   = 'external'
+  end
+
+  config.vm.define "allinone" do |allinone|
+    allinone.vm.synced_folder ".", "/vagrant"
+    allinone.vm.synced_folder "../..", "/openstack" 
+    allinone.vm.provision :shell, path: "run_allinone.sh"
+  end
+
+end
