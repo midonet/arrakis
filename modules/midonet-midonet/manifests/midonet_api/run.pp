@@ -32,18 +32,43 @@ class midonet::midonet_api::run (
   $keystone_host,
   $keystone_port,
   $keystone_admin_token,
-  $keystone_tenant_name
+  $keystone_tenant_name,
+  $catalina_base
 ) {
 
     require midonet::midonet_api::install
 
+    tomcat::instance{'midonet-api':
+        package_name => $tomcat_package,
+    } ->
+
+    tomcat::config::server::connector {'midonet-api':
+        port             => $api_port,
+        catalina_base    => $catalina_base,
+        connector_ensure => 'present',
+        require          => Tomcat::Instance['midonet-api'],
+        notify           => Service[$tomcat_package]
+    }
+
+    file {"/etc/${tomcat_package}/Catalina/localhost/midonet-api.xml":
+        ensure  => present,
+        source  => 'puppet:///modules/midonet/midonet-api/midonet-api.xml',
+        owner   => 'root',
+        group   => 'root',
+        require => Tomcat::Instance['midonet-api'],
+        notify  => Service[$tomcat_package]
+    }
+
     file {'/usr/share/midonet-api/WEB-INF/web.xml':
         ensure  => present,
         content => template('midonet/midonet-api/web.xml.erb'),
-        require => Package['midonet-api']
-    } ~>
+        require => Package['midonet-api'],
+        notify  => Service[$tomcat_package]
+    }
 
     service {$tomcat_package:
-        ensure => running,
+        ensure  => running,
+        require => [File['/usr/share/midonet-api/WEB-INF/web.xml'],
+                    Tomcat::Config::Server::Connector['midonet-api']]
     }
 }

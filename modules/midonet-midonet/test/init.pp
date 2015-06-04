@@ -9,4 +9,11 @@
 # Learn more about module testing here:
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
-include midonet
+
+# Fake the facter when it compiles. The augeas version that will be installed
+# will be this one
+if empty($::augeasversion) {
+  $augeasversion = '1.0.0'
+}
+
+class {'midonet':}

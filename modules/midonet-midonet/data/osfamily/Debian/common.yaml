@@ -39,6 +39,7 @@ midonet::midonet_api::zk_servers:
 midonet::midonet_api::keystone_auth: false
 midonet::midonet_api::vtep: false
 midonet::midonet_api::tomcat_package: 'tomcat7'
+midonet::midonet_api::catalina_base: '/var/lib/tomcat7'
 
 # Neutron Plugin based attributes
 midonet::neutron_plugin::midonet_api_ip: 'localhost'
