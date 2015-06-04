@@ -22,10 +22,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-class midonet::midonet_api::install(
-  $tomcat_package,
-  $tomcat_port) {
+class midonet::midonet_api::install {
+
     require midonet::repository
+    require midonet::midonet_api::augeas
 
     if ! defined(Class['java']) {
         class {'java':
@@ -34,20 +34,13 @@ class midonet::midonet_api::install(
         }
     }
 
-    package {$tomcat_package:
-        ensure  => present,
-        require => Class['java']
+    class {'tomcat':
+        install_from_source => false,
+        require             => [Class['java'],
+                                Exec['update-repos']]
     } ->
 
     package {'midonet-api':
         ensure  => present,
-    } ->
-
-    file {"/etc/${tomcat_package}/Catalina/localhost/midonet-api.xml":
-        ensure  => present,
-        source  => 'puppet:///modules/midonet/midonet-api/midonet-api.xml',
-        owner   => 'root',
-        group   => 'root',
-        require => Package[$tomcat_package]
     }
 }

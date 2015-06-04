@@ -45,7 +45,8 @@ class midonet::repository::centos (
                 descr    => 'Midonet base repo',
                 enabled  => 1,
                 gpgcheck => 1,
-                gpgkey   => $midonet_key_url
+                gpgkey   => $midonet_key_url,
+                timeout  => 60
             }
 
             yumrepo { 'midonet-openstack-integration':
@@ -53,7 +54,8 @@ class midonet::repository::centos (
                 descr    => 'Midonet OS plugin repo',
                 enabled  => 1,
                 gpgcheck => 1,
-                gpgkey   => $midonet_key_url
+                gpgkey   => $midonet_key_url,
+                timeout  => 60
             }
 
             yumrepo { 'midonet-third-party':
@@ -61,7 +63,8 @@ class midonet::repository::centos (
                 descr    => 'Midonet third party repo',
                 enabled  => 1,
                 gpgcheck => 1,
-                gpgkey   => $midonet_key_url
+                gpgkey   => $midonet_key_url,
+                timeout  => 60
             }
 
             yumrepo { 'datastax':
@@ -69,7 +72,8 @@ class midonet::repository::centos (
                 descr    => 'DataStax Repo for Apache Cassandra',
                 enabled  => 1,
                 gpgcheck => 0,
-                gpgkey   => 'https://rpm.datastax.com/rpm/repo_key'
+                gpgkey   => 'https://rpm.datastax.com/rpm/repo_key',
+                timeout  => 60
             }
 
             package { 'epel-release':
@@ -84,7 +88,7 @@ class midonet::repository::centos (
             }
 
             exec {'update-repos':
-                command => '/usr/bin/yum clean all && /usr/bin/yum makecache', # Not need to do anything on CentOS
+                command => '/usr/bin/yum clean all && /usr/bin/yum makecache',
                 require => [Yumrepo['midonet'],
                             Yumrepo['midonet-openstack-integration'],
                             Yumrepo['midonet-third-party'],

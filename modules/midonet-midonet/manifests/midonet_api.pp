@@ -100,12 +100,12 @@ class midonet::midonet_api(
   $keystone_admin_token=undef,
   $keystone_tenant_name='admin',
   $api_ip=$::ipaddress,
-  $api_port='8080') {
+  $api_port='8084',
+  $catalina_base) {
 
-    class {'midonet::midonet_api::install':
-        tomcat_package => $tomcat_package,
-        tomcat_port    => $api_port
-    }
+    include midonet::midonet_api::augeas
+
+    class {'midonet::midonet_api::install': }
 
     class {'midonet::midonet_api::run':
         zk_servers           => $zk_servers,
@@ -117,6 +117,7 @@ class midonet::midonet_api(
         keystone_host        => $keystone_host,
         keystone_port        => $keystone_port,
         keystone_admin_token => $keystone_admin_token,
-        keystone_tenant_name => $keystone_tenant_name
+        keystone_tenant_name => $keystone_tenant_name,
+        catalina_base        => $catalina_base
     }
 }
