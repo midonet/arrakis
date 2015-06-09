@@ -15,19 +15,19 @@ provisioner:
 platforms:
   - name: ubuntu-14.04
     driver_config:
-        image: midonet/ubuntu:14.04
-        privileged: true
-        run_command: /sbin/init
-        ssh_timeout: 10
-        ssh_retries: 5
+      image: midonet/ubuntu:14.04
+      privileged: true
+      run_command: /sbin/init
+      ssh_timeout: 10
+      ssh_retries: 5
   - name: centos-7
     driver_config:
-        image: midonet/centos:centos7
-        privileged: true
-        volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
-        run_command: /usr/sbin/init
-        ssh_timeout: 10
-        ssh_retries: 5
+      image: midonet/centos:centos7
+      privileged: true
+      volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
+      run_command: /usr/sbin/init
+      ssh_timeout: 10
+      ssh_retries: 5
 
 suites:
   - name: default

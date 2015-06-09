@@ -6,25 +6,6 @@ midonet::repository::midonet_key: '35FEEF2BAD40EA777D0C5BA6FCE340D250F18FCF'
 midonet::repository::midonet_stage: 'stable'
 midonet::repository::midonet_key_url: 'http://repo.midonet.org/packages.midokura.key'
 
-# Zookeeper-based attributes
-midonet::zookeeper::servers:
-  - id: 1
-    host: 'localhost'
-midonet::zookeeper::server_id: '1'
-
-midonet::zookeeper::run::conf_env_file: '/etc/zookeeper/zookeeper-env.sh'
-midonet::zookeeper::run::java_home: '/usr/lib/jvm/java-7-openjdk-amd64'
-midonet::zookeeper::run::conf_file: '/etc/zookeeper/zoo.cfg'
-midonet::zookeeper::run::data_dir: '/var/lib/zookeeper'
-
-# Cassandra-based attributes
-midonet::cassandra::seeds:
-  - 'localhost'
-midonet::cassandra::seed_address: 'localhost'
-
-midonet::cassandra::run::conf_dir: '/etc/cassandra'
-midonet::cassandra::run::pid_dir: '/var/run/cassandra'
-
 # Midonet Host Agent-based attributes
 midonet::midonet_agent::zk_servers:
     - ip: 'localhost'
